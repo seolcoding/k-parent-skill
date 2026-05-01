@@ -88,6 +88,7 @@ k-parent-skill/
 | [gstack 개발·상품화 계획](docs/productization-gstack.md) | gstack 기반 QA, 디자인 검토, 배포 검증, 상품화 단계 |
 | [새 스킬 추가 가이드](docs/adding-a-skill.md) | 원본 k-skill 방식의 스킬 추가 규칙 |
 | [로드맵](docs/roadmap.md) | 부모용 스킬 확장 후보 |
+| [브리핑 HTML](docs/briefing.html) | 리포·리서치·기능 계획을 한 번에 설명하는 공유용 HTML |
 | [설치 방법](docs/install.md) | 원본 구조에서 승계한 설치/테스트 안내 |
 | [연구 기록](docs/research/k-parent-skill-architecture-ecosystem-2026-05-01.md) | k-skill 기반 부모 타깃 스킬 아키텍처와 연동 생태계 분석 |
 | [전환 전략 연구](docs/research/k-parent-skill-conversion-strategy-2026-05-01.md) | 부모용 보이스/어시스턴트 전환, API 우선순위, 딥링크형 신청 보조 전략 |

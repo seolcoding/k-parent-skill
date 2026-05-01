@@ -190,6 +190,7 @@ if (readJson("package.json").name === "k-parent-skill") {
       "k-parent-schedule-manager",
       "k-parent-travel-recommender",
       "k-parent-knowledge-helper",
+      "k-parent-content-recommender",
     ];
 
     for (const skillName of parentSkills) {

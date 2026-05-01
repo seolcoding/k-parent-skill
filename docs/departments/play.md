@@ -8,6 +8,7 @@
 - `k-parent-festival-finder`
 - `k-parent-culture-center-events`
 - `k-parent-travel-recommender`
+- `k-parent-content-recommender`
 
 ## Shared patterns
 
@@ -15,6 +16,7 @@
 - 공식 운영정보와 후기를 분리한다.
 - 날씨와 미세먼지에 따라 실내/실외 후보를 다르게 정렬한다.
 - 자녀 일정의 빈 시간, 이동 가능 시간, 여행/체험 선호를 추천에 반영한다.
+- 이동 중 콘텐츠는 화면을 계속 보지 않아도 이해되는지, 교과/체험과 연결되는지, 대화 주제를 만들 수 있는지 평가한다.
 
 ## Next candidates
 
@@ -22,3 +24,4 @@
 - 도서관 어린이 프로그램 파서
 - 문화센터 모집 상태 normalization
 - 아이 동반 여행지/당일치기 코스 추천
+- 차 안에서 듣기 좋은 교과 연계 유튜브/오디오 콘텐츠 추천

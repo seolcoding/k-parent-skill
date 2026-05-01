@@ -12,7 +12,7 @@ The first wedge is:
 2. Parent connects or inputs child context: school, grade, academy, region, schedule, interests.
 3. The system collects real data: school data, timetables, notices, lifelong education, festivals, events, trend sources, and crawled public pages.
 4. The agent converts data into a child schedule, recommendations, reminders, and answers.
-5. The product helps with everyday decisions: what is happening, what to prepare, where to go, what to learn, what to book, what to remember.
+5. The product helps with everyday decisions: what is happening, what to prepare, where to go, what to learn or listen to, what to talk about, what to book, what to remember.
 
 Coupang affiliate links are optional monetization attached to purchase-intent moments. They are not the core logic.
 
@@ -86,6 +86,7 @@ Use this loop for every product surface.
 - Duplicate document detection.
 - Reminder checklist for supplies, applications, payment deadlines, events, and travel preparation.
 - Travel/place/event recommender using child age, schedule gaps, location, weather, budget, and interests.
+- Curriculum-linked content recommender for car rides, commute, waiting time, and parent-child discussion.
 - General knowledge assistant for parent questions with source-aware answers.
 - gstack checks: calendar permission path, confirmation modal, cancellation path, recommendation explanation.
 
@@ -106,7 +107,7 @@ Use this loop for every product surface.
 ### Phase 7: Department Expansion
 
 - `school`: real school data, timetable, notices, OCR, after-school applications.
-- `play`: event and culture center discovery.
+- `play`: event, culture center, travel, and screen-light content recommendations for car rides.
 - `nutrition`: meal planning from school/kindergarten menus plus allergy constraints.
 - `trend`: parent trend summaries with source/date transparency.
 - `shopping`: broader inventory/price comparison beyond Coupang as an add-on.

@@ -166,8 +166,8 @@ if (readJson("package.json").name === "k-parent-skill") {
     assert.match(departments, /`shopping`/);
     assert.match(departments, /`nutrition`/);
     assert.match(productization, /gstack Operating Loop/i);
-    assert.match(productization, /School Document Capture MVP/);
-    assert.match(productization, /Coupang Partners affiliate links/);
+    assert.match(productization, /Mobile Parent Agent MVP/);
+    assert.match(productization, /Coupang affiliate links are optional monetization/);
     assert.match(addingSkill, /k-parent-skill/);
   });
 
@@ -185,6 +185,11 @@ if (readJson("package.json").name === "k-parent-skill") {
       "k-parent-academy-connector",
       "k-parent-school-doc-capture",
       "k-parent-shopping-recommender",
+      "k-parent-mobile-agent",
+      "k-parent-data-collector",
+      "k-parent-schedule-manager",
+      "k-parent-travel-recommender",
+      "k-parent-knowledge-helper",
     ];
 
     for (const skillName of parentSkills) {
@@ -199,6 +204,7 @@ if (readJson("package.json").name === "k-parent-skill") {
     assert.match(architecture, /child age or grade/);
     assert.match(architecture, /confirmation date/);
     assert.match(architecture, /Document ingestion pattern/);
+    assert.match(architecture, /Mobile agent product pattern/);
     assert.match(architecture, /Commerce and affiliate pattern/);
     assert.match(architecture, /Do not submit applications/);
   });

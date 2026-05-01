@@ -39,7 +39,7 @@ K-Parent Skills uses these top-level departments:
 | `play` | 놀이 | places to go, indoor/outdoor play, festivals, culture centers, events |
 | `life` | 생활 | childcare, benefits, healthcare, public applications, family logistics |
 | `trend` | 트렌드 | parenting trends, local buzz, seasonal topics, popular programs |
-| `shopping` | 쇼핑 | supplies, books, toys, price comparison, inventory, affiliate recommendations, purchase planning |
+| `shopping` | 쇼핑 | supplies, books, toys, price comparison, inventory, optional affiliate recommendations, purchase planning |
 | `nutrition` | 영양 | school meals, kindergarten meals, allergies, home meal planning |
 
 Department membership is metadata and documentation. A skill may belong to one primary department and optional secondary departments, but the root folder name stays stable.
@@ -51,6 +51,17 @@ Department membership is metadata and documentation. A skill may belong to one p
 3. Script helper: small one-off deterministic task.
 4. Package helper: reusable Node package under `packages/*`.
 5. Proxy route: free/public API aggregation via `packages/k-skill-proxy`.
+
+## Mobile agent product pattern
+
+The product target is a server-deployed mobile-first parent agent for normal users, not only local developer skills:
+
+1. Mobile surface: parent can open a URL/app, select a child, and ask agentic questions.
+2. Server runtime: crawlers, OCR, schedule extraction, recommendation jobs, and connector tasks run server-side.
+3. Source layer: school data, timetables, education office data, lifelong education, festivals, events, trend sources, and travel/place data are collected with provenance.
+4. Personal layer: child schedule, family calendar, reminders, school documents, academy notices, and preferences are user-controlled.
+5. Action layer: calendar writes, applications, reservations, messages, and purchases require explicit confirmation.
+6. QA layer: gstack validates mobile flows, source freshness states, and deployed canaries.
 
 ## Document ingestion pattern
 
@@ -65,7 +76,7 @@ School, academy, and institution documents should follow an ingest-normalize-con
 
 ## Commerce and affiliate pattern
 
-Shopping recommendations may monetize through Coupang Partners or other affiliate links, but recommendations must preserve parent trust:
+Shopping recommendations may monetize through Coupang Partners or other affiliate links, but this is not core product logic. Recommendations must preserve parent trust:
 
 1. Start from a concrete parent need: school supply list, academy book, event material, nutrition item, toy, or household repeat purchase.
 2. Normalize the need before recommending products: item name, quantity, deadline, required/optional status, age/grade fit, budget, delivery deadline, and source document.
@@ -79,10 +90,10 @@ Shopping recommendations may monetize through Coupang Partners or other affiliat
 
 Use gstack as the development and commercialization quality loop once this repo grows beyond pure skill documents:
 
-1. Product surface: build the smallest usable web/app surface for one department workflow.
+1. Product surface: build the smallest usable mobile web/app surface for one parent workflow.
 2. Dogfood: use gstack browser QA to run the real parent flow end to end.
-3. Design review: inspect screenshots for clarity, trust, disclosure, mobile usability, and parent decision load.
-4. Benchmark: record load, interaction, and OCR/import latency baselines before larger changes.
+3. Design review: inspect screenshots for clarity, trust, source freshness, mobile usability, and parent decision load.
+4. Benchmark: record load, data refresh, crawler, OCR/import, recommendation, and calendar latency baselines before larger changes.
 5. Canary: after deploy, verify the live app has no blocking console errors and that key flows still work.
 6. Ship discipline: keep skill docs, schemas, tests, and product screens aligned in each PR.
 
@@ -102,6 +113,7 @@ Parent-facing skills should normalize information into practical decision fields
 - original document path or capture source when the information came from OCR/PDF/app screenshots
 - confidence and review-needed flag for OCR-derived fields
 - commerce disclosure and affiliate link status when the next action is purchase-related
+- source freshness and crawl provenance when the answer depends on collected data
 
 ## Safety and privacy
 

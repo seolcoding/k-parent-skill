@@ -5,6 +5,9 @@
 ## Skills
 
 - `k-parent-application-helper`
+- `k-parent-mobile-agent`
+- `k-parent-schedule-manager`
+- `k-parent-knowledge-helper`
 
 ## Related skills
 
@@ -17,9 +20,13 @@
 - 대상 조건, 신청 기간, 필요 서류, 로그인 필요 여부, 결과 발표일, 문의처를 분리한다.
 - 신청, 제출, 결제, 취소 같은 side effect는 사용자 승인 전 실행하지 않는다.
 - 마감 임박 항목은 캘린더 후보와 체크리스트 후보로 분리한다.
+- 일반 사용자가 모바일에서 쓸 수 있는 서버 배포형 표면을 우선한다.
+- 자녀별 일정, 가족 캘린더, 리마인더, 일반 지식 질의응답을 연결한다.
 
 ## Next candidates
 
 - 예방접종·건강검진 일정 확인
 - 어린이 병원·약국 야간/휴일 진료 확인
 - 육아종합지원센터/장난감도서관 프로그램 확인
+- 모바일 홈과 에이전틱 명령 입력
+- 자녀 스케줄 conflict detection

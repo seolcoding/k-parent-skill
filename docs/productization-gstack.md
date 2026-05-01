@@ -4,15 +4,19 @@
 
 ## Product Thesis
 
-The first commercial wedge is:
+The core product is a mobile-first parent agent deployed on a server so non-developer parents can use it agentically from a phone. The product should not be limited to affiliate shopping or static skills.
 
-1. Parent captures a school or academy document.
-2. OCR extracts dates, supplies, application deadlines, and event details.
-3. The system proposes calendar events, reminders, and checklists.
-4. Shopping needs become purchase candidates.
-5. Coupang affiliate links are offered with clear disclosure when the parent asks for purchase links.
+The first wedge is:
 
-This wedge connects the strongest departments: `school`, `academy`, `life`, `shopping`, and `nutrition`.
+1. Parent opens a mobile web/app surface.
+2. Parent connects or inputs child context: school, grade, academy, region, schedule, interests.
+3. The system collects real data: school data, timetables, notices, lifelong education, festivals, events, trend sources, and crawled public pages.
+4. The agent converts data into a child schedule, recommendations, reminders, and answers.
+5. The product helps with everyday decisions: what is happening, what to prepare, where to go, what to learn, what to book, what to remember.
+
+Coupang affiliate links are optional monetization attached to purchase-intent moments. They are not the core logic.
+
+This wedge connects the strongest departments: `school`, `academy`, `play`, `life`, `trend`, `nutrition`, and secondarily `shopping`.
 
 ## gstack Operating Loop
 
@@ -20,7 +24,7 @@ Use this loop for every product surface.
 
 1. **Implement the smallest real flow**
    - Start with one parent task, not a generic dashboard.
-   - Example: upload school notice photo, review OCR, create calendar candidates, generate shopping candidates.
+   - Example: mobile parent home shows today's child schedule, school timetable, notices, local events, and recommended next actions.
 
 2. **Dogfood with gstack browser QA**
    - Run the local or preview URL.
@@ -28,18 +32,18 @@ Use this loop for every product surface.
    - Capture screenshots for upload, review, confirmation, and result states.
 
 3. **Design review**
-   - Check visual trust: no hidden ad behavior, no confusing purchase pressure, no unclear child-data handling.
-   - Check density: parents should see date, deadline, materials, cost, and next action without hunting.
-   - Check mobile: photo upload, OCR review, and candidate confirmation must fit without overlap.
+   - Check visual trust: no confusing automation, no unclear child-data handling, no hidden commercial recommendation.
+   - Check density: parents should see child, date, deadline, place, materials, source, and next action without hunting.
+   - Check mobile: schedule cards, data source status, OCR review, and candidate confirmation must fit without overlap.
 
 4. **Benchmark**
-   - Track first load, upload response, OCR extraction time, candidate generation time, and shopping lookup time.
+   - Track first load, data refresh, school/timetable lookup, crawl latency, OCR extraction time, recommendation generation time, and schedule write time.
    - Keep a baseline before adding integrations or heavier UI.
 
 5. **Canary after deploy**
    - Verify the deployed URL loads.
    - Run one smoke path per live department.
-   - Watch for console errors, broken forms, missing disclosure text, failed uploads, and blank states.
+   - Watch for console errors, broken mobile layout, failed crawlers, stale data, failed uploads, and blank states.
 
 6. **Document release**
    - Update `SKILL.md`, `docs/features/*`, department docs, and roadmap with the shipped behavior.
@@ -47,60 +51,84 @@ Use this loop for every product surface.
 
 ## MVP Phases
 
-### Phase 0: Skill OS
+### Phase 0: Skill OS and Data Contracts
 
 - Maintain root skill folders and department docs.
-- Define shared schemas for document capture, calendar candidates, shopping candidates, and affiliate disclosure.
+- Define shared schemas for child profile, school source, timetable, notices, schedule item, crawl record, recommendation, document capture, calendar candidates, shopping candidates, and affiliate disclosure.
 - Keep CI limited to skill/document validation until real deploy surfaces exist.
 
-### Phase 1: School Document Capture MVP
+### Phase 1: Mobile Parent Agent MVP
+
+- Server-deployed mobile web surface for 일반 사용자.
+- Child profile: school, grade, academy, region, interests, constraints.
+- Today view: school timetable, notices, child schedule, local events, reminders, recommended next actions.
+- Agentic input: "이번 주 챙길 거 정리해줘", "주말 갈 곳 추천해줘", "학교 일정 캘린더에 넣어줘".
+- gstack checks: mobile first viewport, child switching, source freshness, empty states, safe confirmation prompts.
+
+### Phase 2: Real Data Collection Layer
+
+- School data and timetable integration.
+- Crawlers for education offices, school pages, lifelong education, festivals, events, culture centers, and trend pages.
+- Source freshness, crawl status, deduplication, and provenance.
+- gstack checks: data refresh status, stale data warning, source link visibility.
+
+### Phase 3: School Document Capture
 
 - Local web surface for image/PDF upload.
 - OCR text review screen.
 - Extracted fields: date, time, place, materials, cost, deadline, target grade, issuer.
-- Calendar candidate export or manual copy.
+- Calendar candidate creation and confirmation.
 - gstack checks: mobile upload, review screen, no overlapping text, empty/error states.
 
-### Phase 2: Calendar and Reminder Workflow
+### Phase 4: Calendar and Recommendation Workflow
 
 - Confirm-before-write calendar integration.
 - Duplicate document detection.
-- Reminder checklist for supplies, applications, and payment deadlines.
-- gstack checks: calendar permission path, confirmation modal, cancellation path.
+- Reminder checklist for supplies, applications, payment deadlines, events, and travel preparation.
+- Travel/place/event recommender using child age, schedule gaps, location, weather, budget, and interests.
+- General knowledge assistant for parent questions with source-aware answers.
+- gstack checks: calendar permission path, confirmation modal, cancellation path, recommendation explanation.
 
-### Phase 3: Shopping and Affiliate Workflow
-
-- Convert materials/checklist items into shopping candidates.
-- Add Coupang Partners link generation.
-- Show affiliate disclosure before links.
-- Provide non-affiliate decision signals: price, delivery date, alternatives, offline/used option.
-- gstack checks: disclosure visibility, no auto-cart/auto-buy path, mobile product comparison layout.
-
-### Phase 4: Academy Connector
+### Phase 5: Academy Connector
 
 - Ingest academy messages, screenshots, or API data.
 - Normalize classes, homework, attendance, makeup classes, counseling, billing, shuttle.
 - Add read/write permission separation.
 - gstack checks: account/login boundaries, child switching, schedule conflict states.
 
-### Phase 5: Department Expansion
+### Phase 6: Commerce as Add-on
 
+- Convert materials/checklist items into shopping candidates only when purchase intent exists.
+- Add Coupang Partners link generation after disclosure.
+- Provide non-affiliate decision signals: price, delivery date, alternatives, offline/used option.
+- gstack checks: disclosure visibility, no auto-cart/auto-buy path, mobile product comparison layout.
+
+### Phase 7: Department Expansion
+
+- `school`: real school data, timetable, notices, OCR, after-school applications.
 - `play`: event and culture center discovery.
 - `nutrition`: meal planning from school/kindergarten menus plus allergy constraints.
 - `trend`: parent trend summaries with source/date transparency.
-- `shopping`: broader inventory/price comparison beyond Coupang.
+- `shopping`: broader inventory/price comparison beyond Coupang as an add-on.
 
 ## Commercialization Model
 
-Primary revenue:
+Primary value:
 
-- Coupang Partners affiliate links from purchase-intent moments.
+- Mobile parent agent that reduces schedule, school, academy, event, and travel decision overhead.
+- Server-deployed product that normal parents can use without local developer tooling.
+
+Revenue options:
+
+- Family premium plan for multi-child schedule, document automation, reminders, and data refresh.
+- Local academy/center lead generation, only with clear sponsorship labeling.
+- B2B school/academy document-to-calendar tools.
+- Coupang Partners affiliate links from purchase-intent moments as a secondary revenue line.
 
 Potential later revenue:
 
-- Premium calendar/document automation for families with multiple children.
-- Local academy/center lead generation, only with clear sponsorship labeling.
-- B2B school/academy document-to-calendar tools.
+- Local partner listings for lifelong education, culture centers, and child-friendly travel programs with sponsorship labels.
+- API/data subscriptions for normalized event and education data.
 
 Non-negotiables:
 
@@ -108,6 +136,7 @@ Non-negotiables:
 - Do not rank unsafe or unsuitable products for commission.
 - Do not auto-purchase, add to cart, submit applications, or expose child data without explicit approval.
 - Keep source documents and OCR outputs in user-controlled storage by default.
+- Treat crawled data as potentially stale; show source and refresh time.
 
 ## gstack Quality Gates
 
@@ -115,21 +144,21 @@ Before a product surface ships:
 
 - `npm run ci` passes.
 - gstack dogfood confirms the core flow works on desktop and mobile.
-- Screenshots show no broken layout, hidden disclosure, or confusing child-data handling.
-- Upload/OCR/calendar/shopping error states are visible and recoverable.
+- Screenshots show no broken layout, stale data ambiguity, hidden disclosure, or confusing child-data handling.
+- Data refresh, upload/OCR/calendar/recommendation error states are visible and recoverable.
 - Deployed canary passes on the production URL.
 
 ## First Build Candidate
 
 Build this first:
 
-`k-parent-school-doc-capture` product surface:
+`k-parent-mobile-agent` product surface:
 
-1. Upload notice image/PDF.
-2. OCR and show editable extracted text.
-3. Extract calendar/checklist candidates.
-4. Ask for confirmation.
-5. Generate shopping candidates from materials.
-6. Show Coupang affiliate disclosure before links.
+1. Mobile home with one child profile.
+2. School/timetable/source refresh panel.
+3. Today's schedule and upcoming deadlines.
+4. Local lifelong education, festival, event, and travel recommendations.
+5. Agentic command box for parent questions and actions.
+6. Confirm-before-write calendar/reminder actions.
 
-This path is narrow, repeatable, monetizable, and naturally expands into school, academy, life, shopping, and nutrition departments.
+This path is narrow enough to build, but broad enough to prove the actual product: an agentic mobile parent assistant backed by real data collection.

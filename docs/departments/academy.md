@@ -5,12 +5,14 @@
 ## Skills
 
 - `k-parent-academy-connector`
+- `k-parent-schedule-manager`
 
 ## Shared patterns
 
 - 읽기와 쓰기 권한을 분리한다.
 - 결제, 상담 신청, 결석/보강 신청, 메시지 전송은 사용자 승인 전 실행하지 않는다.
 - 학원 알림은 `academy_notice` 형태로 수업, 숙제, 출결, 결제, 상담, 셔틀 정보를 분리한다.
+- 학원 일정은 자녀 스케줄과 충돌 감지에 연결한다.
 
 ## Next candidates
 

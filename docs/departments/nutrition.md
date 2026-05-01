@@ -5,6 +5,7 @@
 ## Skills
 
 - `k-parent-meal-planner`
+- `k-parent-knowledge-helper`
 
 ## Shared patterns
 

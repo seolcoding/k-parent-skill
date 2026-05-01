@@ -31,11 +31,11 @@ These rules are repo-specific and apply to everything under this directory.
 ## Release automation rules
 
 - Node packages live under `packages/*` and use npm workspaces.
-- Node package releases use **Changesets**. Do not hand-edit package versions only to cut a release; add a `.changeset/*.md` file instead.
-- npm publish is automated from GitHub Actions and should happen only after the bot-generated **Version Packages** PR is merged into `main`.
-- Python packages live under `python-packages/*` and use **release-please**. Until a real Python package exists, keep the Python release workflow as scaffold-only.
-- PyPI publish should run only when release-please reports `release_created=true` for a concrete package path.
-- Prefer trusted publishing via OIDC for npm and PyPI. Do not introduce long-lived registry tokens unless trusted publishing is unavailable.
+- Release automation is intentionally disabled for now. This repository is currently a parent-skill concept/workflow repo, not a package publishing repo.
+- Do not add push-triggered release workflows until there is a real package to publish and the publishing target is confirmed.
+- If npm publishing becomes real later, reintroduce Changesets and a release workflow in the same PR as the first publishable package decision.
+- If Python publishing becomes real later, add `python-packages/<package-name>/pyproject.toml`, release-please config, and a top-level PyPI publish job together.
+- Prefer trusted publishing via OIDC for npm and PyPI when available. Do not introduce long-lived registry tokens unless trusted publishing is unavailable.
 
 ## Verification rules
 

@@ -14,6 +14,12 @@ This repository keeps the architecture pattern of `NomaDamas/k-skill`, but the p
 
 - **Never write tests that assert `.changeset/*.md` files exist.** Changesets are consumed (deleted) by `changeset version` during the release flow. Any test guarding changeset file presence will break CI on the version-bump commit and block the release pipeline.
 
+## Release automation
+
+- Release workflows are intentionally disabled until this repo has a real package publishing target.
+- Do not re-add push-triggered npm/Python release workflows as scaffolding only; GitHub Actions can fail when all jobs are skipped.
+- Keep CI focused on skill/document validation unless the user explicitly asks to operationalize package publishing.
+
 ## Proxy server development
 
 - 개발 repo: 현재 `k-parent-skill` checkout

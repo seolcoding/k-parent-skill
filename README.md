@@ -77,6 +77,7 @@ k-parent-skill/
 | --- | --- |
 | [아키텍처 컨벤션](docs/architecture.md) | 원본 k-skill 구조 승계, 스킬 승격 경로, 에이전트 컨텍스트 |
 | [디파트먼트 인덱스](docs/departments/README.md) | 학교·학원·놀이·생활·트렌드·쇼핑·영양 분류와 스킬 매핑 |
+| [gstack 개발·상품화 계획](docs/productization-gstack.md) | gstack 기반 QA, 디자인 검토, 배포 검증, 상품화 단계 |
 | [새 스킬 추가 가이드](docs/adding-a-skill.md) | 원본 k-skill 방식의 스킬 추가 규칙 |
 | [로드맵](docs/roadmap.md) | 부모용 스킬 확장 후보 |
 | [설치 방법](docs/install.md) | 원본 구조에서 승계한 설치/테스트 안내 |

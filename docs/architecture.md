@@ -75,6 +75,17 @@ Shopping recommendations may monetize through Coupang Partners or other affiliat
 6. Do not auto-purchase, add to cart, or steer around safety/age suitability for commission.
 7. Keep commercial ranking explainable: relevance, deadline fit, price, reviews, delivery, and stock should be visible signals.
 
+## gstack development loop
+
+Use gstack as the development and commercialization quality loop once this repo grows beyond pure skill documents:
+
+1. Product surface: build the smallest usable web/app surface for one department workflow.
+2. Dogfood: use gstack browser QA to run the real parent flow end to end.
+3. Design review: inspect screenshots for clarity, trust, disclosure, mobile usability, and parent decision load.
+4. Benchmark: record load, interaction, and OCR/import latency baselines before larger changes.
+5. Canary: after deploy, verify the live app has no blocking console errors and that key flows still work.
+6. Ship discipline: keep skill docs, schemas, tests, and product screens aligned in each PR.
+
 ## Parent-domain output schema
 
 Parent-facing skills should normalize information into practical decision fields:
@@ -110,6 +121,7 @@ Future agents should use these files as the standing repository context:
 - `docs/architecture.md`: architecture and promotion conventions
 - `docs/adding-a-skill.md`: new skill workflow
 - `docs/departments/README.md`: department taxonomy and skill map
+- `docs/productization-gstack.md`: gstack-based development and commercialization plan
 - `docs/roadmap.md`: concept and implementation priorities
 
 When changing the architecture or conventions, update these surfaces together.

@@ -23,6 +23,7 @@ These rules are repo-specific and apply to everything under this directory.
 ## Agent context conventions
 
 - Treat `README.md`, `AGENTS.md`, `CLAUDE.md`, `docs/architecture.md`, and `docs/adding-a-skill.md` as the durable context set for future repository agents.
+- Use `docs/productization-gstack.md` when work shifts from skill design to app surfaces, QA, deployment, commercialization, or affiliate funnel decisions.
 - When adding or changing a skill, update all relevant context surfaces in the same change: `SKILL.md`, `docs/features/<skill-name>.md`, `README.md`, and `docs/roadmap.md` when scope changes.
 - Preserve the original k-skill operational conventions unless they conflict with the parent-specific concept.
 - Do not execute login, application submission, cancellation, payment, or child-personal-data entry without explicit user approval.

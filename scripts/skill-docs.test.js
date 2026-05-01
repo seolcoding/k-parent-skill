@@ -147,6 +147,7 @@ if (readJson("package.json").name === "k-parent-skill") {
     const architecture = read(path.join("docs", "architecture.md"));
     const addingSkill = read(path.join("docs", "adding-a-skill.md"));
     const departments = read(path.join("docs", "departments", "README.md"));
+    const productization = read(path.join("docs", "productization-gstack.md"));
 
     assert.match(readme, /NomaDamas\/k-skill/);
     assert.match(readme, /\[아키텍처 컨벤션\]\(docs\/architecture\.md\)/);
@@ -156,6 +157,7 @@ if (readJson("package.json").name === "k-parent-skill") {
     assert.match(architecture, /Skill-first pattern/);
     assert.match(architecture, /Implementation promotion path/);
     assert.match(architecture, /Department taxonomy/);
+    assert.match(architecture, /gstack development loop/);
     assert.match(departments, /`school`/);
     assert.match(departments, /`academy`/);
     assert.match(departments, /`play`/);
@@ -163,6 +165,9 @@ if (readJson("package.json").name === "k-parent-skill") {
     assert.match(departments, /`trend`/);
     assert.match(departments, /`shopping`/);
     assert.match(departments, /`nutrition`/);
+    assert.match(productization, /gstack Operating Loop/i);
+    assert.match(productization, /School Document Capture MVP/);
+    assert.match(productization, /Coupang Partners affiliate links/);
     assert.match(addingSkill, /k-parent-skill/);
   });
 

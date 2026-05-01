@@ -20,6 +20,12 @@ This repository keeps the architecture pattern of `NomaDamas/k-skill`, but the p
 - Do not re-add push-triggered npm/Python release workflows as scaffolding only; GitHub Actions can fail when all jobs are skipped.
 - Keep CI focused on skill/document validation unless the user explicitly asks to operationalize package publishing.
 
+## gstack productization
+
+- Use `docs/productization-gstack.md` as the standing plan for turning skill concepts into product surfaces.
+- When a web/app surface exists, use gstack-style dogfooding before claiming the flow works: upload/import, OCR review, calendar candidate creation, shopping disclosure, and mobile layout.
+- Keep product screens, skill docs, schemas, and roadmap changes aligned in the same PR.
+
 ## Proxy server development
 
 - 개발 repo: 현재 `k-parent-skill` checkout

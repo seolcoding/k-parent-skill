@@ -1,0 +1,71 @@
+# k-parent-skill repository instructions
+
+This repository inherits the broader oh-my-codex guidance from the parent environment.
+These rules are repo-specific and apply to everything under this directory.
+
+## Repository concept
+
+- This repository inherits the architecture pattern of `NomaDamas/k-skill`: root-level skill folders, optional implementation packages under `packages/*`, shared scripts under `scripts/`, and feature docs under `docs/features/*`.
+- Keep the fork/concept as `k-parent-skill`: a 대한민국 부모 생활정보 skill collection.
+- Do not flatten the repository into a single app. Each parent-facing capability should remain an independently installable skill directory with its own `SKILL.md`.
+- Start new parent capabilities as `SKILL.md`-only demo placeholders unless deterministic code is clearly needed.
+- Promote a placeholder to `packages/*` or `scripts/*` only after the repeated workflow and source surface are clear.
+
+## Architecture conventions
+
+- Every skill lives at repository root as `<skill-name>/SKILL.md`; the frontmatter `name` must match the directory name.
+- Detailed user/developer docs live in `docs/features/<skill-name>.md`.
+- Node implementations live in `packages/<skill-name>` and are called from the root skill folder.
+- Small deterministic Python or shell helpers live in `scripts/` or `<skill-name>/scripts/` depending on whether they are shared or skill-specific.
+- Free public API aggregation should use the existing `k-skill-proxy` pattern: narrow allowlisted routes, cache/rate-limit where useful, and no user-side API key exposure.
+- Parent-specific outputs should normalize around: child age/grade, region, date range, source URL, deadline, cost, required documents, reservation/application status, and confirmation date.
+
+## Agent context conventions
+
+- Treat `README.md`, `AGENTS.md`, `CLAUDE.md`, `docs/architecture.md`, and `docs/adding-a-skill.md` as the durable context set for future repository agents.
+- When adding or changing a skill, update all relevant context surfaces in the same change: `SKILL.md`, `docs/features/<skill-name>.md`, `README.md`, and `docs/roadmap.md` when scope changes.
+- Preserve the original k-skill operational conventions unless they conflict with the parent-specific concept.
+- Do not execute login, application submission, cancellation, payment, or child-personal-data entry without explicit user approval.
+- For child-related facts, prefer current official/public sources and include the confirmation date. Do not answer from stale cached snippets when schedules, admissions, events, or application deadlines may have changed.
+
+## Release automation rules
+
+- Node packages live under `packages/*` and use npm workspaces.
+- Node package releases use **Changesets**. Do not hand-edit package versions only to cut a release; add a `.changeset/*.md` file instead.
+- npm publish is automated from GitHub Actions and should happen only after the bot-generated **Version Packages** PR is merged into `main`.
+- Python packages live under `python-packages/*` and use **release-please**. Until a real Python package exists, keep the Python release workflow as scaffold-only.
+- PyPI publish should run only when release-please reports `release_created=true` for a concrete package path.
+- Prefer trusted publishing via OIDC for npm and PyPI. Do not introduce long-lived registry tokens unless trusted publishing is unavailable.
+
+## Verification rules
+
+- For release or packaging changes, run `npm run ci`.
+- Keep release docs, workflow files, and package metadata aligned in the same change.
+
+## Testing anti-patterns
+
+- **Never write tests that assert `.changeset/*.md` files exist.** Changesets are consumed (deleted) by `changeset version` during the release flow. Any test guarding changeset file presence will break CI on the version-bump commit and block the release pipeline.
+
+## Development skill install rules
+
+- When testing or developing skills from this repository, install or sync the current skill directories into the user's home-directory global skill locations first.
+- Use `~/.claude/skills/<skill-name>` for Claude Code and `~/.agents/skills/<skill-name>` for agents-compatible home installs.
+- Respect existing home-directory indirection such as symlinks when syncing `~/.agents/skills`.
+- Do **not** create repo-local `.claude` or `.agents` directories for skill installation unless the user explicitly asks for a repository-local test fixture.
+
+## Free API proxy policy
+
+- The built-in `k-skill-proxy` is for **free APIs only**.
+- Default posture: public read-only endpoint, **no proxy auth by default**.
+- Keep free-API proxy surfaces narrow, allowlisted, cache-backed, and rate-limited.
+- If abuse or operational issues appear later, add stricter controls then instead of preemptively requiring auth.
+
+## Proxy server development
+
+- 개발 repo에서 proxy 코드를 수정하고, main에 merge하면 운영 배포 흐름으로 반영한다.
+- 운영 배포본은 환경별로 다를 수 있다. 새 환경에서는 `docs/architecture.md`와 실제 deploy 설정을 먼저 확인한다.
+- cron/pm2 방식의 자동 배포를 쓸 경우 원본 k-skill처럼 origin/main fetch → fast-forward pull → package-lock 변경 시 npm ci → pm2 restart 순서를 따른다.
+- proxy 서버 코드: `packages/k-skill-proxy/src/server.js`
+- proxy 서버 테스트: `packages/k-skill-proxy/test/server.test.js`
+- proxy 환경변수(API key 등)는 `~/.config/k-parent-skill/secrets.env` 또는 환경별 secret store에 넣고, 실행 스크립트에서 source한다.
+- **dev에서 route를 추가/수정한 뒤 main에 merge되기 전까지는 프로덕션 proxy에 반영되지 않는다.** 로컬 테스트는 `node packages/k-skill-proxy/src/server.js`로 직접 실행한다.

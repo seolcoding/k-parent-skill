@@ -179,6 +179,7 @@ if (readJson("package.json").name === "k-parent-skill") {
       "k-parent-application-helper",
       "k-parent-academy-connector",
       "k-parent-school-doc-capture",
+      "k-parent-shopping-recommender",
     ];
 
     for (const skillName of parentSkills) {
@@ -193,6 +194,7 @@ if (readJson("package.json").name === "k-parent-skill") {
     assert.match(architecture, /child age or grade/);
     assert.match(architecture, /confirmation date/);
     assert.match(architecture, /Document ingestion pattern/);
+    assert.match(architecture, /Commerce and affiliate pattern/);
     assert.match(architecture, /Do not submit applications/);
   });
 

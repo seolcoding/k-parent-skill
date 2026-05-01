@@ -39,7 +39,7 @@ K-Parent Skills uses these top-level departments:
 | `play` | 놀이 | places to go, indoor/outdoor play, festivals, culture centers, events |
 | `life` | 생활 | childcare, benefits, healthcare, public applications, family logistics |
 | `trend` | 트렌드 | parenting trends, local buzz, seasonal topics, popular programs |
-| `shopping` | 쇼핑 | supplies, books, toys, price comparison, inventory, purchase planning |
+| `shopping` | 쇼핑 | supplies, books, toys, price comparison, inventory, affiliate recommendations, purchase planning |
 | `nutrition` | 영양 | school meals, kindergarten meals, allergies, home meal planning |
 
 Department membership is metadata and documentation. A skill may belong to one primary department and optional secondary departments, but the root folder name stays stable.
@@ -63,6 +63,18 @@ School, academy, and institution documents should follow an ingest-normalize-con
 5. Propose actions: calendar events, reminders, checklist items, or application tasks.
 6. Confirm before side effects: write to calendar, send messages, submit applications, or pay only after explicit user approval.
 
+## Commerce and affiliate pattern
+
+Shopping recommendations may monetize through Coupang Partners or other affiliate links, but recommendations must preserve parent trust:
+
+1. Start from a concrete parent need: school supply list, academy book, event material, nutrition item, toy, or household repeat purchase.
+2. Normalize the need before recommending products: item name, quantity, deadline, required/optional status, age/grade fit, budget, delivery deadline, and source document.
+3. Present non-affiliate decision information first: product type, constraints, price range, delivery estimate, alternatives, and whether offline/used purchase is reasonable.
+4. Disclose affiliate status before showing affiliate links. Use clear wording that purchase through the link may generate commission.
+5. Provide affiliate links only after the user asks to buy, compare purchase candidates, or requests product links.
+6. Do not auto-purchase, add to cart, or steer around safety/age suitability for commission.
+7. Keep commercial ranking explainable: relevance, deadline fit, price, reviews, delivery, and stock should be visible signals.
+
 ## Parent-domain output schema
 
 Parent-facing skills should normalize information into practical decision fields:
@@ -78,12 +90,14 @@ Parent-facing skills should normalize information into practical decision fields
 - next action for the parent
 - original document path or capture source when the information came from OCR/PDF/app screenshots
 - confidence and review-needed flag for OCR-derived fields
+- commerce disclosure and affiliate link status when the next action is purchase-related
 
 ## Safety and privacy
 
 - Do not store child names, birth dates, school identifiers, contact information, or application credentials in the repository.
 - Store OCR outputs and document metadata in user-controlled local storage by default; do not commit captured school or academy documents.
 - Do not submit applications, make reservations, cancel, pay, or enter child-personal-data without explicit user approval.
+- Do not hide affiliate relationships or present paid links as neutral recommendations.
 - Separate confirmed official information from recommendations, guesses, reviews, or stale search snippets.
 - Schedules, admissions, events, and applications are time-sensitive. Verify current sources before answering.
 

@@ -93,3 +93,4 @@ k-parent-skill/
 | [연구 기록](docs/research/k-parent-skill-architecture-ecosystem-2026-05-01.md) | k-skill 기반 부모 타깃 스킬 아키텍처와 연동 생태계 분석 |
 | [전환 전략 연구](docs/research/k-parent-skill-conversion-strategy-2026-05-01.md) | 부모용 보이스/어시스턴트 전환, API 우선순위, 딥링크형 신청 보조 전략 |
 | [스펙 인덱스](docs/specs/README.md) | 제품 스펙, 데이터 계약, 프로젝트 구조와 향후 계획 |
+| [플래닝 인덱스](docs/planning/README.md) | OMC 기반 PRD, 스캐폴딩 계획, 기능별 플래닝, 에이전트 운용 계획 |

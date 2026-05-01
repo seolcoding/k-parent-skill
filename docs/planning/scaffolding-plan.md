@@ -1,0 +1,229 @@
+# Scaffolding Plan
+
+This document describes how to move from the current documentation-first repo to implementation without breaking upstream `k-skill` conventions.
+
+## Current Baseline
+
+Keep:
+
+- root-level skill directories with `SKILL.md`
+- `docs/features/<skill>.md`
+- `docs/departments/*.md`
+- `docs/specs/*.md`
+- `scripts/skill-docs.test.js`
+- optional future `packages/`, `scripts/`, and `python-packages/`
+
+Do not create runtime packages until an adapter boundary is proven by fixtures and repeated workflows.
+
+## Phase 0: Planning and Source Inventory
+
+Goal:
+
+- Make implementation decisions explicit before adding code.
+
+Create or refine:
+
+- `docs/planning/*`
+- `docs/sources.md`
+- source inventory table with API owner, endpoint, auth, quota, license, refresh cadence, and risk
+- issue or checklist per source adapter
+
+Exit criteria:
+
+- PRD is accepted.
+- Data contracts are stable enough for fixture design.
+- Sensitive-action boundaries are documented.
+- OMC agent plan is available for future parallel work.
+
+## Phase 1: Core Package Skeleton
+
+Future files:
+
+```text
+packages/k-parent-core/
+├── package.json
+├── src/
+│   ├── index.ts
+│   ├── schemas/
+│   ├── resolvers/
+│   ├── freshness.ts
+│   └── guardrails.ts
+└── test/
+```
+
+Responsibilities:
+
+- shared schemas
+- source freshness model
+- sensitive action taxonomy
+- child profile minimum shape
+- region and institution id resolver interfaces
+- error and fallback model
+
+Required tests:
+
+- schema validation
+- stale source formatting
+- sensitive-action guard behavior
+- no resident registration number or credential fields in public profile schema
+
+## Phase 2: Official Data Adapters
+
+Future files:
+
+```text
+packages/k-parent-source-neis/
+packages/k-parent-source-childcare/
+packages/k-parent-source-events/
+packages/k-parent-source-benefits/
+```
+
+Adapter rules:
+
+- one source owner per package when possible
+- no UI formatting inside source adapters
+- return normalized objects plus raw source metadata
+- expose freshness and source URL
+- fixture tests before live tests
+- live tests are opt-in when API keys are required
+
+Initial adapter order:
+
+1. NEIS school resolver.
+2. NEIS meal and allergy parser.
+3. NEIS school schedule.
+4. Kindergarten and childcare disclosure summary.
+5. TourAPI event/place lookup.
+6. Government24/Bokjiro guidance metadata.
+
+## Phase 3: Recommendation and Briefing Layer
+
+Future files:
+
+```text
+packages/k-parent-recommender/
+├── src/
+│   ├── daily-brief.ts
+│   ├── outing-ranker.ts
+│   ├── application-guidance.ts
+│   ├── content-recommender.ts
+│   └── explanations.ts
+└── test/
+```
+
+Responsibilities:
+
+- combine official data into parent decision units
+- generate recommendation reasons
+- separate official facts from community or commercial signals
+- handle age, date, distance, weather, cost, and schedule constraints
+- emit next-action candidates without side effects
+
+Required tests:
+
+- no affiliate output without purchase intent
+- no school ranking mode
+- stale source warning included when needed
+- recommendation reason exists for each candidate
+
+## Phase 4: Document Capture and Calendar
+
+Future files:
+
+```text
+packages/k-parent-doc-capture/
+packages/k-parent-calendar/
+python-packages/k-parent-ocr-eval/
+```
+
+Responsibilities:
+
+- OCR ingestion abstraction
+- extracted event schema
+- duplicate detection
+- confirmation-required calendar write proposal
+- correction loop for user-reviewed OCR fields
+
+Required tests:
+
+- date/time extraction fixtures
+- ambiguous date handling
+- duplicate event detection
+- confirm-before-write guard
+
+## Phase 5: Mobile Product Surface
+
+Future files:
+
+```text
+apps/mobile-web/
+apps/api/
+```
+
+Create only after the core source adapters and daily brief flow are proven.
+
+Product requirements:
+
+- same-origin API calls where possible
+- narrow mobile view first
+- source and freshness visible
+- confirmation UI for side effects
+- no raw API-key exposure
+- explicit empty, stale, blocked, and failed-source states
+
+## Phase 6: Private Source Workers
+
+Future files:
+
+```text
+packages/k-parent-source-culture-private/
+workers/culture-center-monitor/
+```
+
+Only start after public-source MVP works.
+
+Rules:
+
+- obey terms, robots, and login boundaries
+- no full mirroring
+- conservative polling
+- kill switch per source
+- manual review queue for changed layouts
+- source freshness and confidence shown to users
+
+## CI and Validation
+
+Keep current checks:
+
+- `./scripts/validate-skills.sh`
+- `node --test scripts/skill-docs.test.js`
+- `npm run ci`
+
+Future checks:
+
+- package unit tests
+- fixture snapshot tests
+- source freshness tests
+- schema compatibility tests
+- mobile browser QA
+- stale-data and blocked-source regression tests
+
+## Commit Strategy
+
+Use small, reviewable PRs:
+
+1. docs-only planning
+2. core schemas
+3. NEIS resolver fixtures
+4. NEIS meal adapter
+5. daily brief composition
+6. first mobile surface
+
+Each implementation PR should include:
+
+- changed scope
+- source contract
+- fixtures
+- tests
+- safety impact
+- docs update

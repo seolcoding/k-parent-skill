@@ -18,6 +18,21 @@ Coupang affiliate links are optional monetization attached to purchase-intent mo
 
 This wedge connects the strongest departments: `school`, `academy`, `play`, `life`, `trend`, `nutrition`, and secondarily `shopping`.
 
+## Research-Backed Differentiation
+
+The product should not become another school notice inbox. Existing parent apps are strong at institution-specific push communication, but parents still have to combine separate school, academy, childcare, event, welfare, shopping, and calendar contexts by hand.
+
+The agent should win through horizontal integration:
+
+- NEIS meal plus allergy plus home dinner or shopping preparation.
+- School notice OCR plus calendar candidate plus supply checklist.
+- Academy message plus family schedule conflict detection.
+- Weekend gap plus weather plus TourAPI/local festival/culture program search.
+- Kindergarten or childcare disclosure plus commute, cost, safety, and care-hour comparison.
+- Government24/Bokjiro guidance plus document checklist and reminder, with final submission left to the official site.
+
+The user-visible promise is cross-domain synthesis and confirmed next actions.
+
 ## gstack Operating Loop
 
 Use this loop for every product surface.
@@ -55,6 +70,7 @@ Use this loop for every product surface.
 
 - Maintain root skill folders and department docs.
 - Define shared schemas for child profile, school source, timetable, notices, schedule item, crawl record, recommendation, document capture, calendar candidates, shopping candidates, and affiliate disclosure.
+- Define resolver contracts for school, education office, kindergarten/childcare institution, district, event source, program source, and official application URL.
 - Keep CI limited to skill/document validation until real deploy surfaces exist.
 
 ### Phase 1: Mobile Parent Agent MVP
@@ -68,7 +84,10 @@ Use this loop for every product surface.
 ### Phase 2: Real Data Collection Layer
 
 - School data and timetable integration.
-- Crawlers for education offices, school pages, lifelong education, festivals, events, culture centers, and trend pages.
+- NEIS resolver and meal/schedule/timetable collectors with allergy and nutrition normalization.
+- Kindergarten and childcare disclosure collectors for operating hours, cost, staff, meal, safety, vehicle, and application indicators.
+- TourAPI, public reservation, lifelong education, festivals, events, culture centers, and trend collectors.
+- Crawlers for education offices, school pages, libraries, local government pages, and non-open culture-center surfaces where allowed.
 - Source freshness, crawl status, deduplication, and provenance.
 - gstack checks: data refresh status, stale data warning, source link visibility.
 

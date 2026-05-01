@@ -28,6 +28,18 @@ k-parent-skill/
 - Use `SKILL.md`-only placeholders for concept validation.
 - Add implementation code only when repeated usage proves that deterministic parsing, normalization, or API access is needed.
 
+## Progressive disclosure pattern
+
+Parent skills should preserve the upstream `k-skill` context-budget pattern:
+
+| Stage | Name | Rule |
+| --- | --- | --- |
+| 1 | Advertise | `SKILL.md` frontmatter `name` and `description` should be enough for semantic routing. Descriptions are written for agent matching, not humans browsing a catalog. |
+| 2 | Load | The `SKILL.md` body should stay compact and procedural: when to use, what to ask, workflow, output fields, failure modes. |
+| 3 | Read resources | Long API field maps, policy manuals, PDF-derived tables, and crawler schemas should live in separate docs/resources and be read only when needed. |
+
+This keeps many parent skills installable together without flooding an agent's initial context.
+
 ## Department taxonomy
 
 K-Parent Skills uses these top-level departments:
@@ -51,6 +63,35 @@ Department membership is metadata and documentation. A skill may belong to one p
 3. Script helper: small one-off deterministic task.
 4. Package helper: reusable Node package under `packages/*`.
 5. Proxy route: free/public API aggregation via `packages/k-skill-proxy`.
+
+## Public data integration pattern
+
+Many parent workflows depend on public data where a natural-language query is not enough. Prefer resolver-first pipelines:
+
+1. Resolve user language into official identifiers: school code, education office code, district code, institution id, coordinates, or dataset id.
+2. Query the official/public source with those identifiers.
+3. Normalize records into parent decision fields.
+4. Store provenance: official URL, source name, collection time, field confidence, and freshness.
+5. Explain missing or stale data instead of silently substituting guesses.
+
+Priority source families:
+
+- NEIS: school resolver, academic schedule, timetable candidates, school meals, allergy and nutrition fields.
+- Kindergarten and childcare disclosure: operating type, hours, after-school/extended care, cost, teacher/staff, safety, meal, vehicle, and application indicators.
+- TourAPI and local government datasets: festivals, events, child-friendly places, travel and seasonal programs.
+- Public reservation and lifelong education datasets: culture centers, libraries, civic programs, arts education, registration status.
+- Government24 and Bokjiro: eligibility guidance, document checklists, official links, and reminder candidates.
+
+## Cache and crawler pattern
+
+Use live calls only when the data is volatile or the user needs a current answer. For slow-moving datasets, prefer scheduled or local/server-side synchronization:
+
+- Cache school, kindergarten, childcare, program, and policy reference data with refresh time.
+- Keep raw source payloads separate from normalized records.
+- Deduplicate by official id when available; otherwise use source URL, title, date, place, and text hash.
+- Treat crawler output as fallible: expose blocked, stale, empty, and parse-error states.
+- Keep scraping code in helpers or server jobs; do not encode brittle browser steps only in `SKILL.md`.
+- Prefer official APIs before headless-browser scraping.
 
 ## Mobile agent product pattern
 
@@ -85,6 +126,15 @@ Shopping recommendations may monetize through Coupang Partners or other affiliat
 5. Provide affiliate links only after the user asks to buy, compare purchase candidates, or requests product links.
 6. Do not auto-purchase, add to cart, or steer around safety/age suitability for commission.
 7. Keep commercial ranking explainable: relevance, deadline fit, price, reviews, delivery, and stock should be visible signals.
+
+## Sensitive transaction boundary
+
+Government services, care applications, reservations, payments, academy account actions, and child-data writes require a hard boundary:
+
+1. The agent may collect public requirements, summarize procedures, prepare checklists, and create reminder/calendar candidates.
+2. The agent may open or link to official pages for the parent.
+3. The agent must not collect NPKI/certificate credentials, impersonate identity verification, submit government applications, reserve paid programs, cancel bookings, pay, or expose child personal data without explicit approval.
+4. For certificate-login or identity-heavy services, default to pre-transaction guidance and handoff to the official site.
 
 ## gstack development loop
 

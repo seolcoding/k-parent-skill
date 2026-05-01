@@ -19,6 +19,8 @@ Claude Code, Codex, OpenCode, OpenClaw/ClawHub 등 각종 코딩 에이전트에
 | 축제 | `k-parent-festival-finder` | 지역 축제와 가족 동반 행사를 날짜·연령 기준으로 정리 | 불필요 | [축제 플레이스홀더](docs/features/k-parent-festival-finder.md) |
 | 문화센터, 행사 | `k-parent-culture-center-events` | 백화점·마트·도서관·공공기관 문화센터 강좌와 행사를 탐색 | 불필요 | [문화센터/행사 플레이스홀더](docs/features/k-parent-culture-center-events.md) |
 | 각종 신청 | `k-parent-application-helper` | 돌봄, 방과후, 바우처, 체험 신청의 준비물과 마감일을 정리 | 필요할 수 있음 | [각종 신청 플레이스홀더](docs/features/k-parent-application-helper.md) |
+| 학원 API | `k-parent-academy-connector` | 학원 일정, 숙제, 출결, 결제, 알림 데이터를 통합할 API/연동 컨셉 | 필요할 수 있음 | [학원 API 플레이스홀더](docs/features/k-parent-academy-connector.md) |
+| 학교문서 스캔 | `k-parent-school-doc-capture` | 학교 안내문 사진을 OCR로 저장하고 일정·준비물·신청 마감 캘린더 후보로 정리 | 필요할 수 있음 | [학교문서 스캔 플레이스홀더](docs/features/k-parent-school-doc-capture.md) |
 
 ## 구조
 
@@ -46,6 +48,7 @@ k-parent-skill/
 ## 구현 원칙
 
 - 부모에게 필요한 판단 단위로 요약합니다: 날짜, 위치, 대상 연령, 비용, 준비물, 신청 링크, 마감일.
+- 사진·PDF·알림장·학원 앱에서 들어온 문서는 OCR/추출 결과와 원본을 연결해 일정, 준비물, 신청 항목으로 구조화합니다.
 - 아이 관련 정보는 오래된 결과를 그대로 쓰지 않고 현재 출처를 확인합니다.
 - 로그인, 결제, 신청서 제출은 사용자의 명시적 승인 없이는 실행하지 않습니다.
 - 개인정보와 아동 정보는 로컬 입력값으로만 취급하고 저장하지 않습니다.

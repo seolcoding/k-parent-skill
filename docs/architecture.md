@@ -33,6 +33,17 @@ k-parent-skill/
 4. Package helper: reusable Node package under `packages/*`.
 5. Proxy route: free/public API aggregation via `packages/k-skill-proxy`.
 
+## Document ingestion pattern
+
+School, academy, and institution documents should follow an ingest-normalize-confirm flow:
+
+1. Capture original: photo, PDF, app screenshot, message, or downloaded attachment.
+2. Extract text: OCR or structured parser, keeping confidence and source page/region when available.
+3. Normalize entities: date, time, place, child/grade target, cost, materials, deadline, application URL, contact, and issuer.
+4. Store linkable records: keep original path, extracted text, normalized JSON, source date, and confirmation state together.
+5. Propose actions: calendar events, reminders, checklist items, or application tasks.
+6. Confirm before side effects: write to calendar, send messages, submit applications, or pay only after explicit user approval.
+
 ## Parent-domain output schema
 
 Parent-facing skills should normalize information into practical decision fields:
@@ -46,10 +57,13 @@ Parent-facing skills should normalize information into practical decision fields
 - official source URL
 - confirmation date
 - next action for the parent
+- original document path or capture source when the information came from OCR/PDF/app screenshots
+- confidence and review-needed flag for OCR-derived fields
 
 ## Safety and privacy
 
 - Do not store child names, birth dates, school identifiers, contact information, or application credentials in the repository.
+- Store OCR outputs and document metadata in user-controlled local storage by default; do not commit captured school or academy documents.
 - Do not submit applications, make reservations, cancel, pay, or enter child-personal-data without explicit user approval.
 - Separate confirmed official information from recommendations, guesses, reviews, or stale search snippets.
 - Schedules, admissions, events, and applications are time-sensitive. Verify current sources before answering.

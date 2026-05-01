@@ -82,6 +82,28 @@ Priority source families:
 - Public reservation and lifelong education datasets: culture centers, libraries, civic programs, arts education, registration status.
 - Government24 and Bokjiro: eligibility guidance, document checklists, official links, and reminder candidates.
 
+Default source priority:
+
+1. Official API or official disclosure.
+2. Public data file download.
+3. Map or local-search API for freshness and geocoding.
+4. Limited scraping for public fields missing from official sources.
+5. Community, blog, or review signals as secondary context only.
+
+The assistant should avoid ranking schools or childcare institutions as leaderboards. Prefer practical comparison fields such as distance, hours, care options, class size, meal/safety data, cost, official notices, and deadlines.
+
+## Normalization layer pattern
+
+Parent-domain implementations may keep skills independent while sharing a central normalization layer for codes and profile context:
+
+- `region_code_map`: education, tourism, public-service, legal-dong, and local-government code mapping.
+- `institution`: schools, kindergartens, childcare centers, culture centers, libraries, and civic facilities.
+- `content_item`: festivals, outings, classes, programs, and events.
+- `application_service`: benefits, care programs, reservations, and public-service metadata.
+- `parent_profile`, `child_profile`, and `consent_log`: minimal product profile and consent records.
+
+Do not duplicate NEIS, TourAPI, public-reservation, and welfare code mapping logic inside every skill. Skills should call shared resolvers when the implementation is promoted beyond placeholder docs.
+
 ## Cache and crawler pattern
 
 Use live calls only when the data is volatile or the user needs a current answer. For slow-moving datasets, prefer scheduled or local/server-side synchronization:

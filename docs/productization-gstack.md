@@ -18,6 +18,17 @@ Coupang affiliate links are optional monetization attached to purchase-intent mo
 
 This wedge connects the strongest departments: `school`, `academy`, `play`, `life`, `trend`, `nutrition`, and secondarily `shopping`.
 
+## Voice and Assistant Product Principles
+
+The backend should support mobile, messenger, and voice clients. The interface should answer practical parent intents by combining time, region, child age, cost, and action state:
+
+- today: meals, school schedule, notices, reminders
+- this week: application deadlines, academy conflicts, preparation items
+- this weekend: indoor/outdoor outings, festivals, public events, weather-aware recommendations
+- this month: enrollment, benefit, culture-center, and public reservation windows
+
+Use official data for read-heavy answers and deep-link handoff for applications, reservations, payments, and identity verification.
+
 ## Research-Backed Differentiation
 
 The product should not become another school notice inbox. Existing parent apps are strong at institution-specific push communication, but parents still have to combine separate school, academy, childcare, event, welfare, shopping, and calendar contexts by hand.
@@ -71,6 +82,8 @@ Use this loop for every product surface.
 - Maintain root skill folders and department docs.
 - Define shared schemas for child profile, school source, timetable, notices, schedule item, crawl record, recommendation, document capture, calendar candidates, shopping candidates, and affiliate disclosure.
 - Define resolver contracts for school, education office, kindergarten/childcare institution, district, event source, program source, and official application URL.
+- Define the initial storage model: `parent_profile`, `child_profile`, `region_code_map`, `institution`, `content_item`, `application_service`, and `consent_log`.
+- Define source priority and license policy before private crawling: official API, public file, map/local API, limited scraping, community signal.
 - Keep CI limited to skill/document validation until real deploy surfaces exist.
 
 ### Phase 1: Mobile Parent Agent MVP
@@ -86,7 +99,8 @@ Use this loop for every product surface.
 - School data and timetable integration.
 - NEIS resolver and meal/schedule/timetable collectors with allergy and nutrition normalization.
 - Kindergarten and childcare disclosure collectors for operating hours, cost, staff, meal, safety, vehicle, and application indicators.
-- TourAPI, public reservation, lifelong education, festivals, events, culture centers, and trend collectors.
+- TourAPI, public playground/park datasets, public reservation, lifelong education, festivals, events, culture centers, and trend collectors.
+- Government24 and Bokjiro information collectors for guidance, not automatic submission.
 - Crawlers for education offices, school pages, libraries, local government pages, and non-open culture-center surfaces where allowed.
 - Source freshness, crawl status, deduplication, and provenance.
 - gstack checks: data refresh status, stale data warning, source link visibility.
@@ -130,6 +144,13 @@ Use this loop for every product surface.
 - `nutrition`: meal planning from school/kindergarten menus plus allergy constraints.
 - `trend`: parent trend summaries with source/date transparency.
 - `shopping`: broader inventory/price comparison beyond Coupang as an add-on.
+
+### Phase 8: Voice and Multilingual Layer
+
+- Add voice-optimized prompts for daily brief, weekend recommendation, and deadline reminder flows.
+- Keep official Korean source text intact and translate summaries only when needed.
+- Support multicultural families and grandparents with simple-language summaries.
+- gstack checks: transcript clarity, short-answer fallback, over-notification controls, and source visibility.
 
 ## Commercialization Model
 

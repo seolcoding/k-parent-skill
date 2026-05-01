@@ -90,3 +90,4 @@ k-parent-skill/
 | [로드맵](docs/roadmap.md) | 부모용 스킬 확장 후보 |
 | [설치 방법](docs/install.md) | 원본 구조에서 승계한 설치/테스트 안내 |
 | [연구 기록](docs/research/k-parent-skill-architecture-ecosystem-2026-05-01.md) | k-skill 기반 부모 타깃 스킬 아키텍처와 연동 생태계 분석 |
+| [전환 전략 연구](docs/research/k-parent-skill-conversion-strategy-2026-05-01.md) | 부모용 보이스/어시스턴트 전환, API 우선순위, 딥링크형 신청 보조 전략 |

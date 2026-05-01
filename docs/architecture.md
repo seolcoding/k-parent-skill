@@ -11,6 +11,7 @@ k-parent-skill/
 ├── docs/
 │   ├── architecture.md
 │   ├── adding-a-skill.md
+│   ├── departments/<department>.md
 │   └── features/<skill-name>.md
 ├── packages/
 │   └── <skill-name>/
@@ -21,9 +22,27 @@ k-parent-skill/
 ## Skill-first pattern
 
 - Treat a root skill directory as the public unit of capability.
+- Treat departments as the product taxonomy, not as nested install paths. Do not move skill folders under department folders.
 - Keep `SKILL.md` concise and procedural. Put deeper explanation in `docs/features/<skill-name>.md`.
+- Put department strategy, shared schemas, and skill maps in `docs/departments/<department>.md`.
 - Use `SKILL.md`-only placeholders for concept validation.
 - Add implementation code only when repeated usage proves that deterministic parsing, normalization, or API access is needed.
+
+## Department taxonomy
+
+K-Parent Skills uses these top-level departments:
+
+| Department | Korean label | Scope |
+| --- | --- | --- |
+| `school` | 학교 | school notices, meals, kindergarten, after-school, documents, applications |
+| `academy` | 학원 | hagwon apps/APIs, classes, homework, attendance, makeup lessons, billing |
+| `play` | 놀이 | places to go, indoor/outdoor play, festivals, culture centers, events |
+| `life` | 생활 | childcare, benefits, healthcare, public applications, family logistics |
+| `trend` | 트렌드 | parenting trends, local buzz, seasonal topics, popular programs |
+| `shopping` | 쇼핑 | supplies, books, toys, price comparison, inventory, purchase planning |
+| `nutrition` | 영양 | school meals, kindergarten meals, allergies, home meal planning |
+
+Department membership is metadata and documentation. A skill may belong to one primary department and optional secondary departments, but the root folder name stays stable.
 
 ## Implementation promotion path
 
@@ -76,6 +95,7 @@ Future agents should use these files as the standing repository context:
 - `CLAUDE.md`: compact Claude Code context
 - `docs/architecture.md`: architecture and promotion conventions
 - `docs/adding-a-skill.md`: new skill workflow
+- `docs/departments/README.md`: department taxonomy and skill map
 - `docs/roadmap.md`: concept and implementation priorities
 
 When changing the architecture or conventions, update these surfaces together.

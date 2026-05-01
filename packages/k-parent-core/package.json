@@ -1,0 +1,31 @@
+{
+  "name": "k-parent-core",
+  "version": "0.1.0",
+  "description": "Shared contracts and guardrails for K-Parent Skill packages",
+  "license": "MIT",
+  "main": "src/index.js",
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seolcoding/k-parent-skill.git"
+  },
+  "keywords": [
+    "k-parent",
+    "k-skill",
+    "parenting",
+    "korea"
+  ],
+  "scripts": {
+    "lint": "node --check src/index.js && node --check src/freshness.js && node --check src/guardrails.js && node --check src/schemas.js && node --check test/index.test.js",
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schoolInfo": [
+    { "head": [{ "LIST_TOTAL_COUNT": 2 }] },
+    {
+      "row": [
+        {
+          "ATPT_OFCDC_SC_CODE": "B10",
+          "ATPT_OFCDC_SC_NM": "서울특별시교육청",
+          "SD_SCHUL_CODE": "7010123",
+          "SCHUL_NM": "서울미래초등학교",
+          "SCHUL_KND_SC_NM": "초등학교",
+          "ORG_RDNMA": "서울특별시 중구 미래로 1",
+          "HMPG_ADRES": "https://mirae.sen.es.kr",
+          "ORG_TELNO": "02-0000-0000"
+        },
+        {
+          "ATPT_OFCDC_SC_CODE": "B10",
+          "ATPT_OFCDC_SC_NM": "서울특별시교육청",
+          "SD_SCHUL_CODE": "7010456",
+          "SCHUL_NM": "서울미래중학교",
+          "SCHUL_KND_SC_NM": "중학교",
+          "ORG_RDNMA": "서울특별시 중구 미래로 2"
+        }
+      ]
+    }
+  ]
+}

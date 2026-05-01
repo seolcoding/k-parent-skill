@@ -1,0 +1,25 @@
+{
+  "SchoolSchedule": [
+    { "head": [{ "LIST_TOTAL_COUNT": 2 }] },
+    {
+      "row": [
+        {
+          "ATPT_OFCDC_SC_CODE": "B10",
+          "SD_SCHUL_CODE": "7010123",
+          "SCHUL_NM": "서울미래초등학교",
+          "AA_YMD": "20260501",
+          "EVENT_NM": "현장체험학습",
+          "EVENT_CNTNT": "1학년 현장체험학습"
+        },
+        {
+          "ATPT_OFCDC_SC_CODE": "B10",
+          "SD_SCHUL_CODE": "7010123",
+          "SCHUL_NM": "서울미래초등학교",
+          "AA_YMD": "20260502",
+          "EVENT_NM": "재량휴업일",
+          "EVENT_CNTNT": "학교장 재량휴업일"
+        }
+      ]
+    }
+  ]
+}

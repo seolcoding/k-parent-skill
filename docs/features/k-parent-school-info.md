@@ -10,6 +10,17 @@
 
 ## 다음 구현 후보
 
-- NEIS 학교 기본정보 resolver
+- `packages/k-parent-source-neis`의 NEIS 학교 기본정보 resolver
 - 학교 홈페이지 공지 PDF/이미지 추출
 - 방과후·돌봄 신청 마감일 구조화
+
+## Today Brief P0 구현
+
+첫 공식 데이터 구현은 NEIS 기반이다.
+
+- 학교 검색: `resolveSchool`
+- 급식 조회: `getMeals`
+- 학사일정 조회: `getSchedule`
+- 부모 요약: `composeTodayBrief`
+
+응답은 학교 후보, 급식, 일정, 캘린더 후보, 출처 freshness를 분리해서 보여준다. 캘린더 쓰기, 신청, 예약, 결제는 사용자 확인 전 실행하지 않는다.

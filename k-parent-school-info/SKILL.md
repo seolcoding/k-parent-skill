@@ -34,6 +34,8 @@ metadata:
 
 학교명이 중복되면 지역, 주소, 교육청, 학교급으로 후보를 좁힌다. 임의로 하나를 고르지 않는다.
 
+Today Brief P0 구현이 있는 경우 `k-parent-source-neis.resolveSchool`을 사용해 `school_code`와 `atpt_ofcdc_sc_code`를 확정한다.
+
 ### 3. Check current sources
 
 현재 날짜 기준으로 공식/공개 출처를 우선한다.
@@ -43,7 +45,22 @@ metadata:
 - NEIS 공개 데이터
 - 방과후·돌봄 신청 안내문
 
-### 4. Produce parent summary
+NEIS 기반 Today Brief 흐름:
+
+1. `resolveSchool`로 학교 후보를 확인한다.
+2. `getMeals`로 해당 날짜 급식을 조회한다.
+3. `getSchedule`로 해당 날짜 또는 기간의 학사일정을 조회한다.
+4. `composeTodayBrief`로 `summary`, `warnings`, `todayTasks`, `calendarCandidates`, `sources`를 만든다.
+
+### 4. Handle missing, ambiguous, and stale data
+
+- `ambiguous`: 후보 학교를 모두 보여주고 주소나 학교급으로 재확인한다.
+- `not_found`: 공식 데이터가 없다는 점과 대체 확인 경로를 함께 안내한다.
+- `missing_config`: API 키나 서버 설정이 빠진 상태로 표시하고 수동 확인 링크를 제공한다.
+- `upstream_error`: 상류 장애로 분리하고 사용자의 입력 오류처럼 말하지 않는다.
+- `stale` 또는 `unknown`: 확인 기준일과 최신 확인 필요성을 표시한다.
+
+### 5. Produce parent summary
 
 - 핵심 일정
 - 마감일
@@ -67,3 +84,4 @@ metadata:
 
 - 학교 생활기록, 성적, 학생 개인정보는 사용자가 직접 제공한 범위 안에서만 다룬다.
 - 신청·취소·결제는 사용자 승인 전 실행하지 않는다.
+- 캘린더 등록 후보는 만들 수 있지만 실제 쓰기는 사용자 확인 후에만 한다.

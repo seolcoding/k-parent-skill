@@ -1,0 +1,21 @@
+{
+  "mealServiceDietInfo": [
+    { "head": [{ "LIST_TOTAL_COUNT": 1 }] },
+    {
+      "row": [
+        {
+          "ATPT_OFCDC_SC_CODE": "B10",
+          "SD_SCHUL_CODE": "7010123",
+          "SCHUL_NM": "서울미래초등학교",
+          "MLSV_YMD": "20260501",
+          "MMEAL_SC_CODE": "2",
+          "MMEAL_SC_NM": "중식",
+          "DDISH_NM": "현미밥<br/>돈육김치찌개(5.9.10)<br/>계란말이(1)<br/>깍두기(9)",
+          "ORPLC_INFO": "돼지고기: 국내산",
+          "CAL_INFO": "650.4 Kcal",
+          "NTR_INFO": "탄수화물(g) : 90.1 / 단백질(g) : 28.2 / 지방(g) : 18.3"
+        }
+      ]
+    }
+  ]
+}

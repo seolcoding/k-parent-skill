@@ -10,6 +10,18 @@
 
 ## 다음 구현 후보
 
-- 기존 `k-schoollunch-menu` 흐름 재사용
+- `packages/k-parent-source-neis`의 학교 resolver, 급식 조회, 알레르기 파서 사용
+- `packages/k-parent-brief`의 Today Brief composer로 부모용 요약 생성
 - 유치원 식단 공개 페이지 패턴 수집
 - 주간 식단 요약 템플릿 추가
+
+## Today Brief P0 구현
+
+구현 패키지가 설치된 환경에서는 아래 순서를 따른다.
+
+1. 학교명과 지역을 `resolveSchool`로 NEIS 코드에 매핑한다.
+2. `getMeals`로 해당 날짜의 `mealServiceDietInfo`를 조회한다.
+3. `getSchedule`로 같은 날짜의 `SchoolSchedule`을 조회한다.
+4. `composeTodayBrief`로 `summary`, `warnings`, `todayTasks`, `calendarCandidates`, `sources`를 만든다.
+
+학교 후보가 여러 개면 자동 선택하지 않는다. 급식이 없거나 출처가 오래되었으면 부모에게 상태를 그대로 보여준다.

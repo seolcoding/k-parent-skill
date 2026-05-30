@@ -48,10 +48,12 @@ async function searchVideos(options = {}) {
     publishedAfter,
     payload,
     fetchImpl,
+    fetchedAt,
+    now,
   } = options;
 
   if (payload) {
-    return parse.parseSearch(payload);
+    return parse.parseSearch(payload, { fetchedAt, now });
   }
 
   if (!q || typeof q !== "string") {

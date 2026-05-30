@@ -102,11 +102,27 @@ metadata:
 | 필드 | 필수 | 설명 |
 |------|------|------|
 | `name` | ✅ | **디렉토리 이름과 정확히 일치**해야 한다 |
-| `description` | ✅ | 에이전트 UI 표시용 한 줄 설명 |
+| `description` | ✅ | 에이전트 라우팅용 한국어 설명. 트리거 예시 발화 2~3개 + 겹치는 형제 스킬 경계 문장 포함 (아래 규칙 참고) |
 | `license` | ✅ | 항상 `MIT` |
 | `metadata.category` | ✅ | `utility` / `transit` / `travel` / `messaging` / `legal` / `setup` 등 |
 | `metadata.locale` | ✅ | `ko-KR` |
 | `metadata.phase` | ✅ | `v1` (안정) / `v1.5` (기능 추가 중) |
+
+### description 작성 규칙 (컨텍스트 엔지니어링)
+
+`description`은 에이전트가 스킬을 고르는 1차 신호다. 사람이 카탈로그를 훑기 위한 글이 아니라 **시맨틱 라우팅**을 위한 글이다.
+
+1. **한국어로 쓴다.** 부모 질의가 한국어이므로 영어 설명은 매칭이 약하다.
+2. **트리거 예시 발화 2~3개**를 큰따옴표로 넣는다: `"이번 주 급식 뭐야", "유치원 식단표 확인해줘" 같은 요청에 사용.`
+3. **겹치는 형제 스킬**이 있으면 경계 문장으로 구분한다: `날짜가 박힌 축제는 k-parent-festival-finder, 1박 이상 코스는 k-parent-travel-recommender.`
+4. 동작 패키지가 있으면 한 줄로 언급한다: `... NEIS(packages/k-parent-source-neis)로 ...`.
+
+### 본문 구조와 progressive disclosure
+
+- 본문(`## When to use`, `## Workflow` 등)은 **간결·절차형**으로 유지한다.
+- 동작 패키지가 있으면 `## 데이터 소스 (deterministic packages)` 섹션에 패키지·함수 시그니처·env 변수를 적는다.
+- 긴 코드표·필드맵·정책표·샘플 데이터는 본문에 붓지 말고 **`<skill>/references/*.md`** 로 분리하고 백틱 경로(`` `references/foo.md` ``)로 링크한다. (선례: `korean-scholarship-search/references/`)
+- 질의→스킬 매핑과 겹침 해소 규칙은 `docs/skill-routing.md`에 모은다.
 
 ---
 
@@ -202,6 +218,10 @@ npm run ci
 
 - [ ] `my-new-skill/SKILL.md` 작성 완료
 - [ ] frontmatter `name`이 디렉토리 이름과 일치
+- [ ] `description`이 한국어 + 트리거 예시 발화 2~3개 포함 (겹치는 스킬이 있으면 경계 문장도)
+- [ ] 동작 패키지가 있으면 본문에 `## 데이터 소스` 섹션으로 패키지·env 명시
+- [ ] 긴 코드표/필드맵은 `references/`로 분리하고 백틱 경로로 링크
+- [ ] 새 스킬이거나 라우팅이 바뀌면 `docs/skill-routing.md` 갱신
 - [ ] 부모용 스킬이면 아이 나이/학년, 지역, 날짜, 출처, 마감일, 비용, 준비물, 다음 행동이 출력 형식에 반영됨
 - [ ] child-personal-data, 로그인, 결제, 제출, 취소 같은 side effect는 사용자 승인 전 실행하지 않도록 명시
 - [ ] `npm run ci` 통과 (`./scripts/validate-skills.sh` 포함)

@@ -5,7 +5,7 @@ license: MIT
 metadata:
   category: parenting
   locale: ko-KR
-  phase: demo
+  phase: p0
 ---
 
 # K-Parent Content Recommender

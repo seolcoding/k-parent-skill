@@ -10,6 +10,18 @@ This repository keeps the architecture pattern of `NomaDamas/k-skill`, but the p
 - For each new skill or major skill change, keep `SKILL.md`, `docs/features/<skill-name>.md`, `README.md`, and `docs/roadmap.md` aligned.
 - Do not execute login, application submission, payment, cancellation, or child-personal-data entry without explicit user approval.
 
+## SKILL.md authoring (context engineering)
+
+frontmatter `description`는 에이전트 라우팅의 1차 신호다. 아래를 지킨다.
+
+- `description`은 **한국어**로 쓴다(부모 질의가 한국어이므로). 영어 설명 금지.
+- 실제 사용자 발화 **트리거 예시 2~3개**를 큰따옴표로 넣는다. 예: `"이번 주 급식 뭐야", "유치원 식단표 확인해줘" 같은 요청에 사용.`
+- 의미가 겹치는 형제 스킬이 있으면 **경계 문장**으로 어느 쪽인지 구분한다. 예: `날짜가 박힌 축제는 k-parent-festival-finder, 1박 이상 코스는 k-parent-travel-recommender.`
+- 동작 패키지가 있으면 본문에 `## 데이터 소스 (deterministic packages)` 섹션을 두고 패키지·함수·env 변수를 명시한다.
+- 긴 코드표·필드맵·정책표는 본문에 붓지 말고 `<skill>/references/*.md`로 분리해 백틱 경로로 링크한다(progressive disclosure stage 3).
+- 질의→스킬 매핑과 겹침 해소 규칙은 `docs/skill-routing.md`에 모은다. 스킬을 추가/변경하면 같이 갱신한다.
+- 위 규칙은 `scripts/skill-docs.test.js`의 k-parent 블록이 CI에서 강제한다.
+
 ## Testing anti-patterns
 
 - **Never write tests that assert `.changeset/*.md` files exist.** Changesets are consumed (deleted) by `changeset version` during the release flow. Any test guarding changeset file presence will break CI on the version-bump commit and block the release pipeline.

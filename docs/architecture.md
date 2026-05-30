@@ -34,9 +34,9 @@ Parent skills should preserve the upstream `k-skill` context-budget pattern:
 
 | Stage | Name | Rule |
 | --- | --- | --- |
-| 1 | Advertise | `SKILL.md` frontmatter `name` and `description` should be enough for semantic routing. Descriptions are written for agent matching, not humans browsing a catalog. |
-| 2 | Load | The `SKILL.md` body should stay compact and procedural: when to use, what to ask, workflow, output fields, failure modes. |
-| 3 | Read resources | Long API field maps, policy manuals, PDF-derived tables, and crawler schemas should live in separate docs/resources and be read only when needed. |
+| 1 | Advertise | `SKILL.md` frontmatter `name` and `description` should be enough for semantic routing. Descriptions are written for agent matching, not humans browsing a catalog. For k-parent skills write the description in Korean, include 2-3 concrete trigger utterances, and add a boundary sentence when a sibling skill overlaps. See `docs/adding-a-skill.md` and the cross-skill map in `docs/skill-routing.md`. |
+| 2 | Load | The `SKILL.md` body should stay compact and procedural: when to use, what to ask, workflow, output fields, failure modes. When a deterministic package backs the skill, add a `## 데이터 소스` section naming the package, functions, and env vars. |
+| 3 | Read resources | Long API field maps, policy manuals, PDF-derived tables, and crawler schemas should live in a `<skill>/references/*.md` file (e.g. `k-parent-meal-planner/references/allergen-codes.md`) and be read only when needed. |
 
 This keeps many parent skills installable together without flooding an agent's initial context.
 

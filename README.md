@@ -91,6 +91,7 @@ k-parent-skill/
 | [환경변수 템플릿](.env.example) | `KEDU_INFO_KEY` + 모든 `KSKILL_*` 변수 |
 | [아키텍처 컨벤션](docs/architecture.md) | 원본 k-skill 구조 승계, 스킬 승격 경로, 에이전트 컨텍스트 |
 | [디파트먼트 인덱스](docs/departments/README.md) | 학교·학원·놀이·생활·트렌드·쇼핑·영양 분류와 스킬 매핑 |
+| [스킬 라우팅 인덱스](docs/skill-routing.md) | 부모 질의 → 스킬 매핑, 놀이 계열 겹침 해소, 복합 명령 분해 |
 | [gstack 개발·상품화 계획](docs/productization-gstack.md) | gstack 기반 QA, 디자인 검토, 배포 검증, 상품화 단계 |
 | [새 스킬 추가 가이드](docs/adding-a-skill.md) | 원본 k-skill 방식의 스킬 추가 규칙 |
 | [로드맵](docs/roadmap.md) | 부모용 스킬 확장 후보 |

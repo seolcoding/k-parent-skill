@@ -94,7 +94,7 @@ test("source metadata carries freshness for parent-facing outputs", () => {
 });
 
 test("meal schema keeps allergy numbers and source metadata", () => {
-  const source = normalizeSourceMetadata({ sourceName: "NEIS", fetchedAt: "2026-05-01T00:00:00.000Z" });
+  const source = normalizeSourceMetadata({ sourceName: "NEIS", fetchedAt: "2026-05-01T00:00:00.000Z", now: "2026-05-01T01:00:00.000Z" });
   const meal = normalizeMeal({
     date: "2026-05-01",
     mealType: "중식",

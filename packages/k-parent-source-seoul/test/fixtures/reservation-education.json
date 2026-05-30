@@ -1,0 +1,21 @@
+{
+  "ListPublicReservationEducation": {
+    "list_total_count": 1,
+    "RESULT": { "CODE": "INFO-000", "MESSAGE": "정상 처리되었습니다." },
+    "row": [
+      {
+        "SVCID": "E240202",
+        "SVCNM": "유아 숲 생태교실",
+        "PLACENM": "서울시 평생학습관",
+        "AREANM": "마포구",
+        "USETGTINFO": "만 4세 ~ 만 7세",
+        "SVCSTATNM": "접수중",
+        "RCPTBGNDT": "2026-05-10 10:00:00.0",
+        "RCPTENDDT": "2026-06-10 17:00:00.0",
+        "SVCURL": "https://yeyak.seoul.go.kr/web/reservation/selectReservView.do?rsv_svc_id=E240202",
+        "X": "126.9019",
+        "Y": "37.5660"
+      }
+    ]
+  }
+}

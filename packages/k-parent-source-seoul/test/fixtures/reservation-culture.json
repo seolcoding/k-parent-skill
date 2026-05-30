@@ -1,0 +1,21 @@
+{
+  "ListPublicReservationCulture": {
+    "list_total_count": 1,
+    "RESULT": { "CODE": "INFO-000", "MESSAGE": "정상 처리되었습니다." },
+    "row": [
+      {
+        "SVCID": "S240101",
+        "SVCNM": "어린이 도자기 체험",
+        "PLACENM": "서울시립미술관",
+        "AREANM": "중구",
+        "USETGTINFO": "만 5세 이상",
+        "SVCSTATNM": "접수중",
+        "RCPTBGNDT": "2026-05-01 09:00:00.0",
+        "RCPTENDDT": "2026-06-30 18:00:00.0",
+        "SVCURL": "https://yeyak.seoul.go.kr/web/reservation/selectReservView.do?rsv_svc_id=S240101",
+        "X": "126.9779",
+        "Y": "37.5663"
+      }
+    ]
+  }
+}

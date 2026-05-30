@@ -1,0 +1,31 @@
+{
+  "response": {
+    "header": { "resultCode": "0000", "resultMsg": "OK" },
+    "body": {
+      "items": {
+        "item": {
+          "contentid": "264337",
+          "contenttypeid": "14",
+          "title": "국립어린이과학관",
+          "addr1": "서울특별시 종로구 창경궁로 215",
+          "addr2": "",
+          "firstimage": "http://tong.visitkorea.or.kr/cms/spot2.jpg",
+          "firstimage2": "",
+          "mapx": "126.9970",
+          "mapy": "37.5772",
+          "tel": "02-3668-3000",
+          "dist": "842.5",
+          "areacode": "1",
+          "sigungucode": "23",
+          "cat1": "A02",
+          "cat2": "A0206",
+          "cat3": "A02060500",
+          "modifiedtime": "20260401120000"
+        }
+      },
+      "numOfRows": 30,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

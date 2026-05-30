@@ -1,0 +1,32 @@
+{
+  "response": {
+    "header": { "resultCode": "0000", "resultMsg": "OK" },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "126508",
+            "contenttypeid": "12",
+            "title": "서울어린이대공원",
+            "addr1": "서울특별시 광진구 능동로 216",
+            "addr2": "(능동)",
+            "firstimage": "http://tong.visitkorea.or.kr/cms/spot1.jpg",
+            "firstimage2": "http://tong.visitkorea.or.kr/cms/spot1_thumb.jpg",
+            "mapx": "127.0813",
+            "mapy": "37.5497",
+            "tel": "02-450-9311",
+            "areacode": "1",
+            "sigungucode": "5",
+            "cat1": "A02",
+            "cat2": "A0202",
+            "cat3": "A02020700",
+            "modifiedtime": "20260315103000"
+          }
+        ]
+      },
+      "numOfRows": 30,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

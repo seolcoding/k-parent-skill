@@ -1,0 +1,46 @@
+{
+  "response": {
+    "header": { "resultCode": "0000", "resultMsg": "OK" },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "contentid": "2733967",
+            "contenttypeid": "15",
+            "title": "서울숲 가족 봄 축제",
+            "addr1": "서울특별시 성동구 뚝섬로 273",
+            "addr2": "(성수동1가)",
+            "eventstartdate": "20260601",
+            "eventenddate": "20260605",
+            "firstimage": "http://tong.visitkorea.or.kr/cms/festival1.jpg",
+            "firstimage2": "http://tong.visitkorea.or.kr/cms/festival1_thumb.jpg",
+            "mapx": "127.0411",
+            "mapy": "37.5446",
+            "tel": "02-460-2905",
+            "areacode": "1",
+            "sigungucode": "5"
+          },
+          {
+            "contentid": "2733968",
+            "contenttypeid": "15",
+            "title": "한강 어린이 물놀이 축제",
+            "addr1": "서울특별시 영등포구 여의동로 330",
+            "addr2": "",
+            "eventstartdate": "20260603",
+            "eventenddate": "20260610",
+            "firstimage": "",
+            "firstimage2": "",
+            "mapx": "126.9326",
+            "mapy": "37.5283",
+            "tel": "02-3780-0561",
+            "areacode": "1",
+            "sigungucode": "19"
+          }
+        ]
+      },
+      "numOfRows": 30,
+      "pageNo": 1,
+      "totalCount": 2
+    }
+  }
+}

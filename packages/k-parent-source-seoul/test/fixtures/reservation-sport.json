@@ -1,0 +1,21 @@
+{
+  "ListPublicReservationSport": {
+    "list_total_count": 1,
+    "RESULT": { "CODE": "INFO-000", "MESSAGE": "정상 처리되었습니다." },
+    "row": [
+      {
+        "SVCID": "P240303",
+        "SVCNM": "어린이 수영 강습",
+        "PLACENM": "강동구민체육센터",
+        "AREANM": "강동구",
+        "USETGTINFO": "만 6세 이상",
+        "SVCSTATNM": "접수마감",
+        "RCPTBGNDT": "2026-04-01 09:00:00.0",
+        "RCPTENDDT": "2026-04-20 18:00:00.0",
+        "SVCURL": "https://yeyak.seoul.go.kr/web/reservation/selectReservView.do?rsv_svc_id=P240303",
+        "X": "127.1238",
+        "Y": "37.5301"
+      }
+    ]
+  }
+}

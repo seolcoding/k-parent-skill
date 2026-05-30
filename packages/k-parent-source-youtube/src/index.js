@@ -99,7 +99,7 @@ async function searchVideos(options = {}) {
   }
 
   const body = await res.json();
-  return parse.parseSearch(body);
+  return parse.parseSearch(body, { fetchedAt: fetchedAt || new Date(), now });
 }
 
 module.exports = {

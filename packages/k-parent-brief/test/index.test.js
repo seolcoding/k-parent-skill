@@ -131,7 +131,8 @@ test("composeTodayBrief surfaces timetable, deadlines, and outings", () => {
   assert.equal(brief.todayTasks.some((task) => task.type === "timetable_check"), true);
   assert.equal(brief.todayTasks.some((task) => task.type === "deadline_check"), true);
   assert.equal(brief.todayTasks.some((task) => task.type === "outing_suggestion"), true);
-  assert.equal(brief.calendarCandidates.length, 2);
+  // all 3 applications become confirm-gated calendar candidates (past-date filtering applies only to upcomingDeadlines)
+  assert.equal(brief.calendarCandidates.length, 3);
   assert.equal(brief.calendarCandidates.every((candidate) => candidate.requiresConfirmation), true);
 });
 

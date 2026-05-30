@@ -42,9 +42,11 @@ test("searchVideos normalizes the search fixture (injected fetchImpl)", async ()
     "https://i.ytimg.com/vi/abc123XYZ_0/hqdefault.jpg"
   );
   assert.ok(typeof first.description === "string");
-  // provenance metadata is attached as a nested object
+  // provenance metadata is attached as a nested object via k-parent-core's
+  // normalizeSourceMetadata (shape: { sourceType, sourceName, sourceUrl, ... }).
   assert.ok(first.source && typeof first.source === "object");
-  assert.equal(first.source.url, youtube.SEARCH_URL);
+  assert.equal(first.source.sourceUrl, youtube.SEARCH_URL);
+  assert.ok(first.source.freshness && first.source.freshness.status);
 });
 
 test("searchVideos accepts a pre-fetched payload and bypasses HTTP", async () => {

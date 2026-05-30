@@ -1,0 +1,29 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "00",
+      "resultMsg": "NORMAL SERVICE."
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "hpid": "C1100001",
+            "dutyName": "종로 야간약국",
+            "dutyAddr": "서울특별시 종로구 종로 1",
+            "dutyTel1": "02-300-0001",
+            "wgs84Lat": "37.5704",
+            "wgs84Lon": "126.9826",
+            "dutyTime6s": "0900",
+            "dutyTime6c": "2200",
+            "dutyTime8s": "1000",
+            "dutyTime8c": "2000"
+          }
+        ]
+      },
+      "numOfRows": 50,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

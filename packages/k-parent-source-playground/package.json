@@ -1,0 +1,35 @@
+{
+  "name": "k-parent-source-playground",
+  "version": "0.1.0",
+  "description": "행안부 어린이놀이시설 + 전국도시공원표준데이터 (data.go.kr) adapter for K-Parent Skill",
+  "license": "MIT",
+  "main": "src/index.js",
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seolcoding/k-parent-skill.git"
+  },
+  "keywords": [
+    "k-parent",
+    "k-skill",
+    "playground",
+    "urban-park",
+    "data.go.kr"
+  ],
+  "dependencies": {
+    "k-parent-core": "0.1.0"
+  },
+  "scripts": {
+    "lint": "node --check src/index.js && node --check src/parse.js && node --check test/index.test.js",
+    "test": "node --test"
+  }
+}

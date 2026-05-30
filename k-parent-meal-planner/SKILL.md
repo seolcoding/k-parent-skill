@@ -5,14 +5,14 @@ license: MIT
 metadata:
   category: parenting
   locale: ko-KR
-  phase: demo
+  phase: p0
 ---
 
 # K-Parent Meal Planner
 
 ## What this skill does
 
-대한민국 부모가 아이의 식단을 확인하거나 계획할 때 쓴다. 현재는 데모 플레이스홀더이며, 학교 급식·유치원 식단·가정 식단 후보를 한 화면에서 판단하기 좋게 정리하는 워크플로우를 정의한다.
+대한민국 부모가 아이의 식단을 확인하거나 계획할 때 쓴다. 학교 급식은 NEIS 공개 데이터로 확정하고, 알레르기·일정·시간표와 함께 부모용 요약으로 합친다. 결정형 구현은 `packages/k-parent-source-neis`와 `packages/k-parent-brief`를 사용한다.
 
 ## When to use
 
@@ -33,14 +33,52 @@ metadata:
 - 알레르기, 못 먹는 음식, 선호 음식
 - 집밥 추천까지 필요한지 여부
 
-### 2. Resolve school and fetch official data
+### 2. Resolve 교육청 + 학교 코드 먼저
 
-Today Brief P0에서는 구현 패키지가 있으면 아래 순서로 처리한다.
+급식을 조회하기 전에 NEIS 코드 두 개를 확정한다: `ATPT_OFCDC_SC_CODE`(교육청), `SD_SCHUL_CODE`(학교).
 
-- `k-parent-source-neis.resolveSchool`로 학교명, 지역, 학교급을 NEIS 코드로 확정한다.
-- `k-parent-source-neis.getMeals`로 날짜별 급식 데이터를 조회한다.
-- `k-parent-source-neis.getSchedule`로 같은 날짜의 학사일정을 조회한다.
-- `k-parent-brief.composeTodayBrief`로 급식, 알레르기, 일정, 출처를 부모용 JSON으로 합친다.
+```js
+const { resolveSchool } = require("k-parent-source-neis");
+
+const resolved = await resolveSchool({
+  schoolName: "서울미래초등학교",
+  region: "서울",          // 또는 educationOfficeCode: "B10"
+  schoolLevel: "초등학교",
+});
+// resolved.ok 가 false 이고 status === "ambiguous" 이면 후보를 사용자에게 확인받는다.
+```
+
+### 3. Fetch meals → compose brief
+
+```js
+const { getMeals, getSchedule, getTimetable } = require("k-parent-source-neis");
+const { composeTodayBrief } = require("k-parent-brief");
+
+const office = resolved.school.atptOfcdcScCode;
+const code = resolved.school.schoolCode;
+
+const meals = await getMeals({ educationOfficeCode: office, schoolCode: code, date: "2026-05-01" });
+const schedule = await getSchedule({ educationOfficeCode: office, schoolCode: code, startDate: "2026-05-01", endDate: "2026-05-01" });
+const timetable = await getTimetable({ educationOfficeCode: office, schoolCode: code, schoolLevel: "초등학교", date: "2026-05-01" });
+
+const brief = composeTodayBrief({
+  date: "2026-05-01",
+  childProfile: { stage: "lower_elementary", allergyNumbers: [10] }, // 10 = 돼지고기
+  school: resolved.school,
+  meals: meals.ok ? meals.meals : [],
+  scheduleItems: schedule.ok ? schedule.scheduleItems : [],
+  timetable: timetable.ok ? timetable.timetable : [],
+});
+// brief.warnings 의 type === "allergy" 항목으로 아이 알레르기 매칭을 부모에게 알린다.
+```
+
+각 급식 항목은 `menuItems`, `allergens`(라벨), `allergyNumbers`(1~19), `origin`, `calories`, `nutrition`, `source`를 포함한다.
+
+### 3b. Data-contract envelope
+
+- 성공: `{ ok: true, status: "ok", meals: [...] }`
+- 실패: `{ ok: false, status: <ERROR_STATUS>, message }` — `ambiguous` / `not_found`(급식 없음) / `stale` / `upstream_error` / `missing_config`.
+- 모든 항목에 `source` 메타데이터(`sourceName`, `sourceUrl`, `fetchedAt`, `freshness.status`)가 붙는다.
 
 실제 답변에서는 현재 날짜 기준으로 공식/공개 출처를 확인한다.
 
@@ -53,7 +91,7 @@ Today Brief P0에서는 구현 패키지가 있으면 아래 순서로 처리한
 - 학교 후보가 여러 개면 임의 선택하지 말고 후보 이름, 주소, 교육청을 제시해 확인을 요청한다.
 - 방학, 공휴일, 재량휴업일, 미등록 데이터로 급식이 없으면 `not_found` 상태와 함께 "확인된 급식 없음"으로 답한다.
 - API 키가 없거나 상류가 실패하면 `missing_config` 또는 `upstream_error`를 숨기지 말고 대체 확인 경로를 안내한다.
-- 출처 freshness가 `stale` 또는 `unknown`이면 최신 확인 필요 경고를 함께 출력한다.
+- 출처 freshness가 `stale` 또는 `unknown`이면 `fetchedAt`(확인 기준일)을 표시하고 최신 확인 필요 경고를 함께 출력한다. `composeTodayBrief`가 `source_freshness` 경고를 자동 생성한다.
 
 ### 4. Summarize for parents
 
@@ -78,6 +116,8 @@ Today Brief P0에서는 구현 패키지가 있으면 아래 순서로 처리한
 
 ## Notes
 
-- 아이 알레르기 정보는 저장하지 않는다.
+- 아이 알레르기 정보는 저장하지 않는다. `childProfile`은 호출 단위로만 사용한다.
 - 건강·의학 판단처럼 말하지 말고, 필요하면 보호자와 의료진 확인을 권한다.
-- 캘린더 등록, 신청, 구매, 결제는 `k-parent-core` guardrail에 따라 부모 확인 전 실행하지 않는다.
+- 로그인, 신청 제출, 취소, 결제, 아이 개인정보 입력은 사용자의 명시적 승인 없이 실행하지 않는다.
+- 캘린더 등록 후보(`calendarCandidates`)는 `k-parent-core` guardrail로 `requiresConfirmation: true`, `executable: false` 상태이며 부모 확인 전 실행하지 않는다.
+- NEIS 인증키는 `KEDU_INFO_KEY` 환경변수로 주입한다. 키가 없으면 `missing_config`로 실패한다.

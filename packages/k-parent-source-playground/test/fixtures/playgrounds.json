@@ -1,0 +1,35 @@
+{
+  "response": {
+    "header": { "resultCode": "00", "resultMsg": "NORMAL SERVICE." },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "pfctSn": "100123",
+            "pfctNm": "행복어린이집 놀이터",
+            "ronaAddr": "서울특별시 성동구 행당로 45",
+            "lnmadr": "서울특별시 성동구 행당동 123",
+            "latitude": "37.5573",
+            "longitude": "127.0294",
+            "instlMtrlCn": "미끄럼틀,그네,모래놀이",
+            "instlPlaceCdNm": "주택단지",
+            "referenceDate": "2026-03-01"
+          },
+          {
+            "pfctSn": "100124",
+            "pfctNm": "성수공원 놀이시설",
+            "ronaAddr": "서울특별시 성동구 성수일로 77",
+            "latitude": "37.5446",
+            "longitude": "127.0560",
+            "instlMtrlCn": "복합놀이대,시소",
+            "instlPlaceCdNm": "도시공원",
+            "referenceDate": "2026-03-01"
+          }
+        ]
+      },
+      "numOfRows": 100,
+      "pageNo": 1,
+      "totalCount": 2
+    }
+  }
+}

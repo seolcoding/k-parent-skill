@@ -20,8 +20,9 @@ function parseReservations(payload, options = {}) {
 
   const items = rows.map((row) => {
     const institution = normalizeInstitution({
-      name: row.PLACENM,
-      region: row.AREANM,
+      name: row.PLACENM || row.SVCNM || "서울 공공서비스",
+      type: "facility",
+      address: row.AREANM || null,
     });
     return {
       institution,
@@ -40,10 +41,13 @@ function parseReservations(payload, options = {}) {
   });
 
   const metadata = normalizeSourceMetadata({
-    source: options.source || "SeoulOpenData",
-    fetched_at: options.fetchedAt,
-    license: options.license,
-    url: options.url,
+    sourceName: options.sourceName || "서울 열린데이터광장 공공서비스예약",
+    sourceType: "official",
+    sourceUrl:
+      options.sourceUrl || "http://openapi.seoul.go.kr:8088",
+    fetchedAt: options.fetchedAt,
+    now: options.now,
+    maxAgeHours: options.maxAgeHours,
   });
 
   return { items, metadata, resultCode };

@@ -1,0 +1,24 @@
+{
+  "response": {
+    "header": { "resultCode": "00", "resultMsg": "NORMAL SERVICE." },
+    "body": {
+      "items": {
+        "item": {
+          "mngNo": "PARK-0001",
+          "parkNm": "서울숲",
+          "parkSe": "근린공원",
+          "rdnmadr": "서울특별시 성동구 뚝섬로 273",
+          "lnmadr": "서울특별시 성동구 성수동1가 685",
+          "latitude": "37.5446",
+          "longitude": "127.0374",
+          "cnvnncFcltyCo": "화장실,주차장,벤치",
+          "plgrndFcltyCo": "어린이놀이터,물놀이장",
+          "referenceDate": "2026-02-15"
+        }
+      },
+      "numOfRows": 100,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

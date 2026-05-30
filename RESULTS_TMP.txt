@@ -1,0 +1,4 @@
+RESULTS
+k-parent-source-seoul: pass=8 fail=0
+k-parent-source-library: pass=6 fail=0
+k-parent-source-culture: pass=6 fail=0

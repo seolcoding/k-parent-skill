@@ -77,7 +77,9 @@ test("toICS produces a valid VCALENDAR/VEVENT string", () => {
   assert.match(ics, /DESCRIPTION:/);
   assert.match(ics, /END:VEVENT/);
   assert.ok(ics.trim().endsWith("END:VCALENDAR"));
-  assert.match(ics, new RegExp(`UID:${candidate.id}@k-parent-skill`));
+  // UID may be RFC5545 line-folded (CRLF + space); compare on the unfolded form.
+  const unfolded = ics.replace(/\r\n /g, "");
+  assert.match(unfolded, new RegExp(`UID:${candidate.id}@k-parent-skill`));
 });
 
 test("toICS handles dotted dates and skips invalid entries", () => {

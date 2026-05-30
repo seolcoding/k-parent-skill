@@ -10,19 +10,23 @@ const {
 const {
   getMeals,
   getSchedule,
+  getTimetable,
   normalizeDateInput,
   normalizeMealRows,
   normalizeSchoolRows,
+  normalizeTimetableRows,
   parseDishName,
   requestNeisJson,
   resolveEducationOffice,
   resolveSchool,
+  resolveTimetableDataset,
 } = require("../src/index");
 
 const fixturesDir = path.join(__dirname, "fixtures");
 const schoolPayload = readFixture("school-info.json");
 const mealPayload = readFixture("meal.json");
 const schedulePayload = readFixture("schedule.json");
+const timetablePayload = readFixture("timetable.json");
 
 test("normalizeDateInput accepts NEIS compact and dashed dates", () => {
   assert.equal(normalizeDateInput("20260501").isoDate, "2026-05-01");
@@ -121,6 +125,72 @@ test("schedule rows normalize academic calendar items", async () => {
   assert.equal(result.scheduleItems.length, 2);
   assert.equal(result.scheduleItems[0].title, "현장체험학습");
   assert.equal(result.scheduleItems[0].date, "2026-05-01");
+});
+
+test("resolveTimetableDataset maps school level to NEIS dataset", () => {
+  assert.equal(resolveTimetableDataset("초등학교"), "elsTimetable");
+  assert.equal(resolveTimetableDataset("중학교"), "misTimetable");
+  assert.equal(resolveTimetableDataset("고등학교"), "hisTimetable");
+  assert.equal(resolveTimetableDataset("mis"), "misTimetable");
+  assert.equal(resolveTimetableDataset("hisTimetable"), "hisTimetable");
+  assert.equal(resolveTimetableDataset(""), "elsTimetable");
+});
+
+test("timetable rows normalize period and subject with source freshness", () => {
+  const rows = normalizeTimetableRows(timetablePayload, {
+    dataset: "elsTimetable",
+    fetchedAt: "2026-05-01T00:00:00.000Z",
+    now: "2026-05-01T01:00:00.000Z",
+  });
+
+  assert.equal(rows.length, 2);
+  assert.equal(rows[0].date, "2026-05-01");
+  assert.equal(rows[0].period, 1);
+  assert.equal(rows[0].subject, "국어");
+  assert.equal(rows[0].grade, "1");
+  assert.equal(rows[0].className, "2");
+  assert.equal(rows[0].title, "1교시 국어");
+  assert.equal(rows[0].source.freshness.status, SOURCE_FRESHNESS.FRESH);
+});
+
+test("getTimetable selects dataset and returns normalized timetable", async () => {
+  const result = await getTimetable({
+    schoolCode: "7010123",
+    educationOfficeCode: "B10",
+    schoolLevel: "초등학교",
+    startDate: "2026-05-01",
+    payload: timetablePayload,
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.dataset, "elsTimetable");
+  assert.equal(result.startDate, "2026-05-01");
+  assert.equal(result.timetable.length, 2);
+  assert.equal(result.timetable[1].subject, "수학");
+});
+
+test("getTimetable builds dataset-specific URL with period params", async () => {
+  let fetchedUrl = "";
+  const result = await getTimetable({
+    schoolCode: "7010123",
+    educationOfficeCode: "B10",
+    dataset: "mis",
+    startDate: "2026-05-01",
+    endDate: "2026-05-02",
+    grade: "1",
+    apiKey: "test-key",
+    fetchImpl: async (url) => {
+      fetchedUrl = String(url);
+      return new Response(JSON.stringify({ misTimetable: [{ head: [{ LIST_TOTAL_COUNT: 0 }] }] }), { status: 200 });
+    },
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.dataset, "misTimetable");
+  assert.ok(fetchedUrl.includes("open.neis.go.kr/hub/misTimetable"));
+  assert.ok(fetchedUrl.includes("TI_FROM_YMD=20260501"));
+  assert.ok(fetchedUrl.includes("TI_TO_YMD=20260502"));
+  assert.ok(fetchedUrl.includes("GRADE=1"));
 });
 
 test("live NEIS request requires API key by default", async () => {

@@ -5,14 +5,14 @@ license: MIT
 metadata:
   category: parenting
   locale: ko-KR
-  phase: demo
+  phase: p0
 ---
 
 # K-Parent School Info
 
 ## What this skill does
 
-대한민국 초·중·고 학부모가 학교 정보를 빠르게 확인하도록 돕는다. 현재는 데모 플레이스홀더이며 학교 기본정보, 공지사항, 학사일정, 방과후, 급식, 통학 관련 확인 절차를 정의한다.
+대한민국 초·중·고 학부모가 학교 기본정보, 학사일정, 시간표, 급식을 NEIS 공개 데이터로 확정해 부모 실행 단위로 정리한다. 결정형 구현은 `packages/k-parent-source-neis`와 `packages/k-parent-brief`를 사용한다.
 
 ## When to use
 
@@ -30,27 +30,63 @@ metadata:
 - 확인할 정보 유형: 공지, 일정, 방과후, 급식, 통학, 시설, 돌봄
 - 날짜 범위
 
-### 2. Resolve the school
+### 2. Resolve 교육청 + 학교 코드 먼저
 
-학교명이 중복되면 지역, 주소, 교육청, 학교급으로 후보를 좁힌다. 임의로 하나를 고르지 않는다.
+학교를 조회하기 전에 반드시 NEIS 코드 두 개를 확정한다: `ATPT_OFCDC_SC_CODE`(교육청)와 `SD_SCHUL_CODE`(학교).
 
-Today Brief P0 구현이 있는 경우 `k-parent-source-neis.resolveSchool`을 사용해 `school_code`와 `atpt_ofcdc_sc_code`를 확정한다.
+```js
+const { resolveSchool } = require("k-parent-source-neis");
 
-### 3. Check current sources
+const resolved = await resolveSchool({
+  schoolName: "서울미래초등학교",
+  region: "서울",          // 또는 educationOfficeCode: "B10"
+  schoolLevel: "초등학교",  // 동명 학교 구분에 사용
+});
+// resolved.ok === true 일 때 resolved.school.schoolCode / school.atptOfcdcScCode 사용
+```
 
-현재 날짜 기준으로 공식/공개 출처를 우선한다.
+`resolveSchool`이 `ambiguous`를 반환하면 임의로 하나를 고르지 않고 `candidates`(이름, 주소, 학교급)를 사용자에게 보여주고 재확인한다.
 
-- 학교 홈페이지 공지사항
-- 교육청 학교 정보
-- NEIS 공개 데이터
-- 방과후·돌봄 신청 안내문
+### 3. Fetch official data → compose brief
 
-NEIS 기반 Today Brief 흐름:
+학교 코드를 확정한 뒤 NEIS 함수를 호출한다. 모두 `educationOfficeCode`(또는 `atptOfcdcScCode`)와 `schoolCode`가 필요하다.
 
-1. `resolveSchool`로 학교 후보를 확인한다.
-2. `getMeals`로 해당 날짜 급식을 조회한다.
-3. `getSchedule`로 해당 날짜 또는 기간의 학사일정을 조회한다.
-4. `composeTodayBrief`로 `summary`, `warnings`, `todayTasks`, `calendarCandidates`, `sources`를 만든다.
+```js
+const { getMeals, getSchedule, getTimetable } = require("k-parent-source-neis");
+const { composeTodayBrief } = require("k-parent-brief");
+
+const office = resolved.school.atptOfcdcScCode;
+const code = resolved.school.schoolCode;
+
+const meals = await getMeals({ educationOfficeCode: office, schoolCode: code, date: "2026-05-01" });
+const schedule = await getSchedule({ educationOfficeCode: office, schoolCode: code, startDate: "2026-05-01", endDate: "2026-05-31" });
+const timetable = await getTimetable({ educationOfficeCode: office, schoolCode: code, schoolLevel: "초등학교", date: "2026-05-01" });
+// getTimetable는 schoolLevel(초/중/고) 또는 dataset(els/mis/his)로 elsTimetable/misTimetable/hisTimetable를 선택한다.
+
+const brief = composeTodayBrief({
+  date: "2026-05-01",
+  childProfile: { stage: "lower_elementary" },
+  school: resolved.school,
+  meals: meals.ok ? meals.meals : [],
+  scheduleItems: schedule.ok ? schedule.scheduleItems : [],
+  timetable: timetable.ok ? timetable.timetable : [],
+  applications: [/* 방과후·돌봄 신청 마감 {title, dueAt, source} */],
+  outings: [/* 추천 나들이 {title, location, source} */],
+});
+```
+
+`composeTodayBrief`는 `summary`, `warnings`, `todayTasks`, `timetable`, `upcomingDeadlines`, `suggestedOutings`, `calendarCandidates`, `sources`를 반환한다.
+
+### 3b. Data-contract envelope
+
+모든 source 함수는 동일한 봉투를 따른다.
+
+- 성공: `{ ok: true, status: "ok", ... }`
+- 실패: `{ ok: false, status: <ERROR_STATUS>, message, ... }`
+  - `ERROR_STATUS`: `ambiguous`, `not_found`, `stale`, `upstream_error`, `missing_config`
+- 정규화된 항목(meal/schedule/timetable)에는 항상 `source` 메타데이터가 붙는다: `sourceName`, `sourceUrl`, `fetchedAt`, `freshness.status`(`fresh`/`stale`/`unknown`).
+
+이미지/PDF 공지처럼 NEIS에 없는 출처는 공식 홈페이지로 분리해 안내한다.
 
 ### 4. Handle missing, ambiguous, and stale data
 
@@ -58,7 +94,7 @@ NEIS 기반 Today Brief 흐름:
 - `not_found`: 공식 데이터가 없다는 점과 대체 확인 경로를 함께 안내한다.
 - `missing_config`: API 키나 서버 설정이 빠진 상태로 표시하고 수동 확인 링크를 제공한다.
 - `upstream_error`: 상류 장애로 분리하고 사용자의 입력 오류처럼 말하지 않는다.
-- `stale` 또는 `unknown`: 확인 기준일과 최신 확인 필요성을 표시한다.
+- `stale` 또는 `unknown`: `source.freshness.status`와 `fetchedAt`(확인 기준일)을 함께 표시하고 최신 확인 필요성을 알린다. `composeTodayBrief`는 이 경우 `source_freshness` 경고를 자동 생성한다.
 
 ### 5. Produce parent summary
 
@@ -83,5 +119,6 @@ NEIS 기반 Today Brief 흐름:
 ## Notes
 
 - 학교 생활기록, 성적, 학생 개인정보는 사용자가 직접 제공한 범위 안에서만 다룬다.
-- 신청·취소·결제는 사용자 승인 전 실행하지 않는다.
-- 캘린더 등록 후보는 만들 수 있지만 실제 쓰기는 사용자 확인 후에만 한다.
+- 로그인, 신청 제출, 취소, 결제, 아이 개인정보 입력은 사용자의 명시적 승인 없이 실행하지 않는다.
+- `composeTodayBrief`의 `calendarCandidates`는 `k-parent-core` guardrail에 의해 `requiresConfirmation: true`, `executable: false`로 표시된다. 실제 캘린더 쓰기는 사용자 확인 후에만 한다.
+- NEIS 인증키는 `KEDU_INFO_KEY` 환경변수로 주입한다. 키가 없으면 함수는 `missing_config`로 실패하므로 수동 확인 경로를 안내한다.

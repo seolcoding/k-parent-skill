@@ -1,63 +1,50 @@
 ---
 name: k-parent-festival-finder
-description: Use when Korean parents ask for family-friendly festivals, local events, seasonal outings, child-friendly programs, schedules, fees, or reservation links.
-license: MIT
-metadata:
-  category: parenting
-  locale: ko-KR
-  phase: demo
+description: 대한민국 부모를 위한 가족 축제·행사 찾기 스킬. 한국관광공사 TourAPI searchFestival로 날짜·지역 기준 축제를 검색하고, 가족(아이) 동반 적합도를 정리해 추천한다. "이번 주말 가족 축제", "다음 달 우리 동네 행사", "아이랑 갈 만한 봄 축제" 같은 요청에 사용.
 ---
 
-# K-Parent Festival Finder
+# k-parent-festival-finder
 
-## What this skill does
+날짜와 지역으로 진행 중/예정 축제를 찾아, 아이 동반 가족 관점에서 정리해 추천하는 스킬.
 
-부모가 아이와 갈 수 있는 축제와 지역 행사를 빠르게 찾도록 돕는다. 현재는 데모 플레이스홀더이며 날짜, 지역, 연령, 비용, 혼잡도 관점으로 축제 정보를 정리하는 절차를 정의한다.
+## 데이터 소스 (deterministic package)
 
-## When to use
+- `k-parent-source-tourapi`
+  - `searchFestival({ eventStartDate, eventEndDate, areaCode, sigunguCode })` → `/searchFestival2`
+  - 반환 항목: `{ contentId, title, addr, startDate, endDate, image, mapx, mapy, tel, areaCode }`
 
-- "이번 달 아이랑 갈 축제 찾아줘"
-- "부산 근처 가족 축제 추천"
-- "무료 체험 있는 행사만 골라줘"
-- "유아가 가도 괜찮은 축제 있어?"
+환경변수: `KSKILL_TOURAPI_KEY` (data.go.kr serviceKey). 없으면 `status: missing_config` 에러.
 
-## Workflow
+## 데이터 계약 (envelope & 정규화)
 
-### 1. Collect inputs
+- 응답 봉투: `response.body.items.item` — **배열 또는 단일 객체** 모두 처리(`extractItems`).
+- 날짜는 `YYYYMMDD` → `YYYY-MM-DD`로 정규화(`startDate`/`endDate`).
+- `eventStartDate`는 `YYYYMMDD` 형식 필수. 누락 시 함수가 에러를 던진다.
+- `areaCode`는 TourAPI 지역코드(예: 1=서울). 시군구는 `sigunguCode`.
 
-- 지역과 이동 가능 거리
-- 날짜 또는 기간
-- 아이 나이
-- 무료/유료, 실내/실외, 체험 중심 여부
-- 대중교통/자차 여부
+## 신선도 (freshness)
 
-### 2. Verify event status
+- 각 축제의 `source.freshness.status` 확인. `stale`이면 일정 변동 가능성을 안내.
+- 축제 일정/운영은 변동이 잦으므로 결과에 항상 공식 출처(주최/관광공사) 확인 안내 포함.
 
-축제 정보는 변동이 잦으므로 현재 기준으로 공식 행사 페이지, 지자체 공지, 주최 기관 공지를 확인한다.
+## 워크플로
 
-### 3. Summarize decision points
+1. 기간 결정: 사용자가 "이번 주말/다음 달" 등으로 말하면 오늘 날짜(시스템 제공) 기준으로 `eventStartDate`(YYYYMMDD) 계산. 종료일 필터가 필요하면 `eventEndDate`.
+2. 지역 결정: 지역명 → `areaCode` 매핑(필요 시 사용자 확인). 전국이면 areaCode 생략 후 결과를 지역별로 묶음.
+3. `searchFestival(...)` 호출(키 없으면 오프라인 불가 → 사용자에게 키 발급 안내).
+4. **가족 적합도(family suitability)** 정리 — 각 축제에 대해:
+   - 제목/주소/카테고리로 아이 동반 적합도 추정(예: "어린이/가족/체험" 키워드). 단정하지 말고 추정 표기.
+   - 기간(startDate~endDate)과 현재 날짜 비교해 진행중/예정/종료 표시.
+   - 위치(mapx/mapy)와 주소, 연락처(tel), 대표 이미지.
+   - 비용/입장료는 데이터에 없으면 "확인 필요(공식)", 임의 생성 금지.
+5. 정렬: 시작일 임박 순 또는 거리(좌표) 순.
 
-- 행사명
-- 기간과 운영 시간
-- 대상 연령
-- 비용
-- 예약 필요 여부
-- 이동과 주차
-- 비 오면 가능한지
+## 가드레일 (approval)
 
-## Done when
+- 조회·추천만 수행. 예매/티켓 구매/신청은 실행하지 않는다.
+- 결제·신청·예약·취소는 `normalizeActionCandidate` 후보로만 제시하고 **명시적 승인** 후 공식 사이트로 핸드오프.
+- 아동 개인정보를 입력·저장하지 않는다.
 
-- 후보별 공식 링크와 확인일을 적었다.
-- 아이 연령에 맞지 않는 행사는 제외하거나 이유를 표시했다.
-- 마감·예약·준비물을 분리해 보여 줬다.
+## 관련 문서
 
-## Failure modes
-
-- 행사 일정이 변경되었으나 포털 정보가 늦게 갱신됨
-- 프로그램별 예약 마감이 다름
-- 현장 혼잡도는 공식 정보만으로 판단하기 어려움
-
-## Notes
-
-- "아이 동반 가능"과 "아이에게 적합"을 구분한다.
-- 무료 행사라도 예약, 체험 재료비, 주차비를 따로 확인한다.
+- `docs/features/k-parent-festival-finder.md`

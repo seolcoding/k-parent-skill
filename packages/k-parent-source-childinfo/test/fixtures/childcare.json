@@ -1,0 +1,41 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "00",
+      "resultMsg": "NORMAL SERVICE."
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "stcode": "11110000001",
+            "crname": "행복 국공립어린이집",
+            "crtypename": "국공립",
+            "craddr": "서울특별시 종로구 세종대로 1",
+            "crtelno": "02-100-0001",
+            "crcnfm": "60",
+            "crchcnt": "52",
+            "crcargbn": "Y",
+            "crcctv": "Y",
+            "cropertime": "07:30~19:30"
+          },
+          {
+            "stcode": "11110000002",
+            "crname": "햇살 가정어린이집",
+            "crtypename": "가정",
+            "craddr": "서울특별시 종로구 율곡로 10",
+            "crtelno": "02-100-0002",
+            "crcnfm": "20",
+            "crchcnt": "18",
+            "crcargbn": "N",
+            "crcctv": "Y",
+            "cropertime": "07:30~19:30"
+          }
+        ]
+      },
+      "numOfRows": 100,
+      "pageNo": 1,
+      "totalCount": 2
+    }
+  }
+}

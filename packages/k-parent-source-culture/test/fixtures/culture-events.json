@@ -1,0 +1,33 @@
+{
+  "response": {
+    "comMsgHeader": { "returnCode": "00" },
+    "msgBody": {
+      "perforList": [
+        {
+          "seq": "201210",
+          "title": "어린이 인형극 - 아기돼지 삼형제",
+          "startDate": "2026-06-01",
+          "endDate": "2026-06-30",
+          "place": "세종문화회관 어린이극장",
+          "realmName": "연극",
+          "area": "서울",
+          "thumbnail": "http://www.culture.go.kr/upload/rdf/2026/thumb201210.jpg",
+          "url": "http://www.culture.go.kr/detail.do?seq=201210",
+          "charge": "전석 15,000원"
+        },
+        {
+          "seq": "201311",
+          "title": "가족과 함께하는 자연 미술 전시",
+          "startDate": "2026-05-20",
+          "endDate": "2026-07-15",
+          "place": "국립현대미술관 과천",
+          "realmName": "전시",
+          "area": "경기",
+          "thumbnail": "http://www.culture.go.kr/upload/rdf/2026/thumb201311.jpg",
+          "url": "http://www.culture.go.kr/detail.do?seq=201311",
+          "charge": "무료"
+        }
+      ]
+    }
+  }
+}

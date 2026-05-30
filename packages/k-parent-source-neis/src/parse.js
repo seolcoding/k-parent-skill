@@ -211,6 +211,77 @@ function normalizeMealRows(payload, options = {}) {
   });
 }
 
+const TIMETABLE_DATASETS = Object.freeze({
+  els: "elsTimetable",
+  mis: "misTimetable",
+  his: "hisTimetable",
+  sps: "spsTimetable",
+});
+
+function resolveTimetableDataset(schoolLevelOrDataset) {
+  const token = normalizeToken(schoolLevelOrDataset);
+  if (!token) {
+    return TIMETABLE_DATASETS.els;
+  }
+
+  if (Object.values(TIMETABLE_DATASETS).includes(String(schoolLevelOrDataset))) {
+    return String(schoolLevelOrDataset);
+  }
+
+  if (TIMETABLE_DATASETS[token]) {
+    return TIMETABLE_DATASETS[token];
+  }
+
+  if (token.includes("초")) {
+    return TIMETABLE_DATASETS.els;
+  }
+  if (token.includes("중")) {
+    return TIMETABLE_DATASETS.mis;
+  }
+  if (token.includes("고")) {
+    return TIMETABLE_DATASETS.his;
+  }
+  if (token.includes("특수")) {
+    return TIMETABLE_DATASETS.sps;
+  }
+
+  return TIMETABLE_DATASETS.els;
+}
+
+function normalizeTimetableRows(payload, options = {}) {
+  const dataset = options.dataset || TIMETABLE_DATASETS.els;
+  const source = makeNeisSource(dataset, options);
+  return extractRows(payload, dataset).map((row) => {
+    const date = compactDateToIso(row.ALL_TI_YMD);
+    const period = row.PERIO != null && row.PERIO !== "" ? Number(row.PERIO) : null;
+    const subject = row.ITRT_CNTNT || null;
+    return {
+      ...normalizeScheduleItem({
+        id: [row.SD_SCHUL_CODE, row.ALL_TI_YMD, row.GRADE, row.CLASS_NM, row.PERIO].filter((value) => value != null && value !== "").join(":") || null,
+        title: period != null ? `${period}교시 ${subject || "수업"}`.trim() : (subject || "수업"),
+        description: subject,
+        date,
+        startsAt: date,
+        endsAt: date,
+        institution: {
+          schoolCode: row.SD_SCHUL_CODE,
+          atptOfcdcScCode: row.ATPT_OFCDC_SC_CODE,
+          name: row.SCHUL_NM || null,
+        },
+        source,
+      }),
+      dataset,
+      grade: row.GRADE != null && row.GRADE !== "" ? String(row.GRADE) : null,
+      className: row.CLASS_NM != null && row.CLASS_NM !== "" ? String(row.CLASS_NM) : null,
+      period,
+      subject,
+      semester: row.SEM || null,
+      schoolYear: row.AY || null,
+      raw: row,
+    };
+  });
+}
+
 function normalizeScheduleRows(payload, options = {}) {
   const source = makeNeisSource("SchoolSchedule", options);
   return extractRows(payload, "SchoolSchedule").map((row) => normalizeScheduleItem({
@@ -298,7 +369,10 @@ module.exports = {
   normalizeMealRows,
   normalizeScheduleRows,
   normalizeSchoolRows,
+  normalizeTimetableRows,
   parseDishName,
   resolveEducationOffice,
   resolveSchoolFromRows,
+  resolveTimetableDataset,
+  TIMETABLE_DATASETS,
 };

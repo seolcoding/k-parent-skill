@@ -1,0 +1,26 @@
+{
+  "rCode": "0",
+  "rMessage": "",
+  "data": [
+    {
+      "productId": 1000111,
+      "productName": "베베앙 캡형 물티슈 100매 10팩",
+      "productPrice": 12900,
+      "productImage": "https://image.coupang.com/products/1000111.jpg",
+      "productUrl": "https://link.coupang.com/a/aaaa",
+      "isRocket": true,
+      "isFreeShipping": true,
+      "categoryName": "출산/유아동"
+    },
+    {
+      "productId": 1000222,
+      "productName": "순둥이 엠보싱 물티슈 70매 20팩",
+      "productPrice": 23900,
+      "productImage": "https://image.coupang.com/products/1000222.jpg",
+      "productUrl": "https://link.coupang.com/a/bbbb",
+      "isRocket": false,
+      "isFreeShipping": false,
+      "categoryName": "출산/유아동"
+    }
+  ]
+}

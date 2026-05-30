@@ -1,0 +1,37 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "00",
+      "resultMsg": "NORMAL SERVICE."
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "kindercode": "K100000001",
+            "kindername": "서울미래유치원",
+            "establish": "공립",
+            "addr": "서울특별시 종로구 사직로 100",
+            "telno": "02-200-0001",
+            "clcnt": "8",
+            "ppcnt": "160",
+            "opertypbus": "Y"
+          },
+          {
+            "kindercode": "K100000002",
+            "kindername": "참사랑유치원",
+            "establish": "사립",
+            "addr": "서울특별시 종로구 인사동길 5",
+            "telno": "02-200-0002",
+            "clcnt": "5",
+            "ppcnt": "95",
+            "opertypbus": "N"
+          }
+        ]
+      },
+      "numOfRows": 100,
+      "pageNo": 1,
+      "totalCount": 2
+    }
+  }
+}

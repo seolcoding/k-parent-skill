@@ -29,6 +29,7 @@
   },
   "scripts": {
     "lint": "node --check src/index.js && node --check src/parse.js && node --check test/index.test.js",
-    "test": "node --test"
+    "test": "node --test",
+    "refresh-fixtures": "node scripts/refresh-fixtures.mjs"
   }
 }

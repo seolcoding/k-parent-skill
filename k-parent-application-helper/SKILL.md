@@ -1,6 +1,6 @@
 ---
 name: k-parent-application-helper
-description: Use when Korean parents ask for help with child-related applications, childcare, after-school, vouchers, experience programs, public benefits, deadlines, or required documents.
+description: 아동수당·부모급여·양육수당·아이돌봄·보육료·유아학비 등 육아 복지 서비스의 자격·서류·마감을 안내하고 복지로/정부24/아이사랑 딥링크와 마감 캘린더 후보를 제공한다. 신청 제출은 사용자 승인이 필요하며 공동인증서 자동 제출은 하지 않는다. "아동수당 신청 방법", "부모급여 서류", "보육료 신청 마감" 같은 요청에 사용.
 license: MIT
 metadata:
   category: parenting
@@ -8,60 +8,46 @@ metadata:
   phase: demo
 ---
 
-# K-Parent Application Helper
+# k-parent-application-helper
 
-## What this skill does
+육아 복지 서비스 신청을 돕는 도우미. 자격/서류/마감 안내와 공식 사이트
+딥링크를 제공한다.
 
-아이 관련 각종 신청을 놓치지 않게 돕는 부모용 스킬이다. 현재는 데모 플레이스홀더이며 돌봄, 방과후, 체험, 바우처, 지자체 지원사업의 대상 조건, 준비물, 마감일을 정리하는 절차를 정의한다.
+## 핵심 동작
 
-## When to use
+- `k-parent-source-welfare` 패키지(큐레이션 카탈로그, 오프라인) 사용.
+  - `listServices({ category? })` — 아동수당·부모급여·양육수당·가정양육수당·
+    아이돌봄·방과후·보육료·유아학비 목록.
+  - `getService(serviceId)` — 단일 서비스(자격·`requiredDocs[]`·연락처·마감).
+  - `buildDeepLink(service, params?)` — 복지로/정부24/아이사랑/아이돌봄 딥링크
+    (`requiresOfficialSiteHandoff: true`).
+- 마감이 있는 서비스는 `k-parent-calendar`의 `calendarCandidate`로 마감 알림
+  후보를 만들고 `dedupeCandidates`로 정리한다.
 
-- "초등 돌봄 신청 준비물 알려줘"
-- "방과후 신청 마감 언제야?"
-- "아이 체험 프로그램 신청 도와줘"
-- "우리 지역 양육 지원 신청할 거 정리해줘"
+## 가드레일 (반드시 지킬 것)
 
-## Workflow
+- **신청 제출은 사용자 승인 후에만.** 신청서 제출·로그인·결제를 자동 수행하지
+  않는다.
+- **공동인증서(NPKI)/금융인증서 자동 제출 금지.** 인증서·비밀번호·주민등록번호
+  등 민감정보를 입력·저장하지 않는다.
+- 딥링크와 캘린더 후보까지만 만들고, 실제 신청은 공식 사이트에서 사용자가 직접
+  하도록 안내한다(`requiresOfficialSiteHandoff`).
+- 복지 금액·자격 기준은 매년 바뀌므로 공식 사이트 확인을 항상 안내한다.
 
-### 1. Collect inputs
+## 선택적 라이브 조회
 
-- 신청 종류
-- 지역과 기관
-- 아이 나이 또는 학년
-- 보호자 자격 조건
-- 신청 마감일을 이미 알고 있는지 여부
+- 기본은 큐레이션 카탈로그(오프라인). `KSKILL_DATAGOKR_KEY` 환경변수가 있으면
+  data.go.kr 라이브 조회를 켤 수 있으나 선택사항이며 테스트는 오프라인이다.
 
-### 2. Verify official application page
+## 전형적 흐름
 
-현재 기준으로 공식 접수처를 확인한다. 정부24, 복지로, 교육청, 학교, 지자체, 기관 접수 페이지를 우선한다.
-
-### 3. Build application checklist
-
-- 대상 조건
-- 신청 기간
-- 필요 서류
-- 본인인증/로그인 필요 여부
-- 제출 방식
-- 결과 발표일
-- 문의처
-
-### 4. Stop before irreversible action
-
-로그인, 개인정보 입력, 제출, 결제, 취소는 사용자에게 명시적으로 확인받기 전 진행하지 않는다.
+1. 사용자 상황(아동 월령·이용 형태 등)으로 적합 서비스 후보 선정.
+2. `getService`로 자격·서류·마감 안내, `buildDeepLink`로 신청 경로 제공.
+3. 마감을 `calendarCandidate`로 만들어 사용자 확인 후 일정화.
+4. 신청 단계는 공식 사이트로 핸드오프하고 사용자 승인을 받는다.
 
 ## Done when
 
-- 공식 접수처와 확인일을 적었다.
-- 준비물과 마감일을 체크리스트로 정리했다.
-- 사용자가 다음에 누를 버튼이나 준비할 서류를 알 수 있다.
-
-## Failure modes
-
-- 접수 페이지가 로그인 뒤에 있음
-- 지역별 조건이 다름
-- 마감일이 공지 본문, 첨부 PDF, 신청 페이지에 다르게 표시됨
-
-## Notes
-
-- 신청 단계에서는 개인정보 최소 입력 원칙을 따른다.
-- 불확실한 자격 조건은 단정하지 않고 문의처 확인 항목으로 남긴다.
+- 적합 서비스의 자격·서류·마감이 정리되었다.
+- 공식 사이트 딥링크와 마감 캘린더 후보가 제공되었다.
+- 신청 제출 등 민감 작업은 승인 전 실행되지 않았다(인증서 자동 제출 없음).

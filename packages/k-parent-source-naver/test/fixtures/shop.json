@@ -1,0 +1,40 @@
+{
+  "lastBuildDate": "Sat, 30 May 2026 09:00:00 +0900",
+  "total": 215345,
+  "start": 1,
+  "display": 2,
+  "items": [
+    {
+      "title": "유아 <b>물티슈</b> 캡형 100매 10팩",
+      "link": "https://search.shopping.naver.com/gate.nhn?id=11111111",
+      "image": "https://shopping-phinf.pstatic.net/main_1111/11111111.jpg",
+      "lprice": "12900",
+      "hprice": "",
+      "mallName": "베베몰",
+      "productId": "11111111",
+      "productType": "1",
+      "brand": "베베앙",
+      "maker": "베베앙",
+      "category1": "출산/육아",
+      "category2": "물티슈",
+      "category3": "캡형물티슈",
+      "category4": ""
+    },
+    {
+      "title": "프리미엄 <b>물티슈</b> 엠보싱 70매 20팩",
+      "link": "https://search.shopping.naver.com/gate.nhn?id=22222222",
+      "image": "https://shopping-phinf.pstatic.net/main_2222/22222222.jpg",
+      "lprice": "23900",
+      "hprice": "25900",
+      "mallName": "쿠팡",
+      "productId": "22222222",
+      "productType": "2",
+      "brand": "순둥이",
+      "maker": "순둥이",
+      "category1": "출산/육아",
+      "category2": "물티슈",
+      "category3": "엠보싱물티슈",
+      "category4": ""
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "00",
+      "resultMsg": "NORMAL SERVICE."
+    },
+    "body": {
+      "items": {
+        "item": [
+          {
+            "hpid": "A1100002",
+            "dutyName": "서울중앙병원 응급실",
+            "dutyAddr": "서울특별시 종로구 대학로 10",
+            "dutyTel1": "02-400-0002",
+            "wgs84Lat": "37.5811",
+            "wgs84Lon": "127.0022",
+            "dutyTime1s": "0000",
+            "dutyTime1c": "2400"
+          }
+        ]
+      },
+      "numOfRows": 50,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}

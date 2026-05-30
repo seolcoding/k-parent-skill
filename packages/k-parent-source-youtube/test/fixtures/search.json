@@ -1,0 +1,79 @@
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "fixture-etag",
+  "regionCode": "KR",
+  "pageInfo": {
+    "totalResults": 2,
+    "resultsPerPage": 2
+  },
+  "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "item-etag-1",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "abc123XYZ_0"
+      },
+      "snippet": {
+        "publishedAt": "2025-09-01T09:00:00Z",
+        "channelId": "UCexampleChannel1",
+        "title": "초등 4학년 과학 - 물의 상태 변화 쉽게 이해하기",
+        "description": "초등학교 4학년 과학 교과 '물의 상태 변화' 단원을 부모와 함께 듣기 좋은 설명 영상입니다.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/abc123XYZ_0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/abc123XYZ_0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/abc123XYZ_0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "함께하는 과학교실",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-09-01T09:00:00Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "item-etag-2",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "def456UVW_1"
+      },
+      "snippet": {
+        "publishedAt": "2026-02-15T12:30:00Z",
+        "channelId": "UCexampleChannel2",
+        "title": "한국사 이야기 - 세종대왕과 한글 창제",
+        "description": "차 안에서 듣기 좋은 한국사 이야기. 세종대왕과 한글 창제 과정을 차분하게 설명합니다.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/def456UVW_1/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/def456UVW_1/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/def456UVW_1/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "들려주는 한국사",
+        "liveBroadcastContent": "none",
+        "publishTime": "2026-02-15T12:30:00Z"
+      }
+    }
+  ]
+}

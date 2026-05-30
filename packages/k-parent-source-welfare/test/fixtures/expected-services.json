@@ -1,0 +1,13 @@
+{
+  "serviceIds": [
+    "child-allowance",
+    "parental-benefit",
+    "child-care-allowance",
+    "home-care-allowance",
+    "idolbom",
+    "after-school",
+    "childcare-fee",
+    "preschool-tuition"
+  ],
+  "categories": ["현금지원", "돌봄서비스", "이용권/바우처"]
+}

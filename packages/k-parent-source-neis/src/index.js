@@ -8,8 +8,10 @@ const {
   normalizeMealRows,
   normalizeScheduleRows,
   normalizeSchoolRows,
+  normalizeTimetableRows,
   resolveEducationOffice,
   resolveSchoolFromRows,
+  resolveTimetableDataset,
 } = require("./parse");
 
 const NEIS_BASE_URL = "https://open.neis.go.kr/hub";
@@ -175,11 +177,50 @@ async function getSchedule(options = {}) {
   };
 }
 
+async function getTimetable(options = {}) {
+  if (!options.schoolCode) {
+    throw new Error("schoolCode is required.");
+  }
+  if (!options.educationOfficeCode && !options.atptOfcdcScCode) {
+    throw new Error("educationOfficeCode is required.");
+  }
+
+  const dataset = resolveTimetableDataset(options.dataset || options.schoolLevel);
+  const range = normalizeDateRange(
+    options.startDate || options.date,
+    options.endDate || options.startDate || options.date,
+  );
+  const payload = options.payload || await requestNeisJson(dataset, {
+    ATPT_OFCDC_SC_CODE: options.educationOfficeCode || options.atptOfcdcScCode,
+    SD_SCHUL_CODE: options.schoolCode,
+    TI_FROM_YMD: range.start.compactDate,
+    TI_TO_YMD: range.end.compactDate,
+    AY: options.schoolYear,
+    SEM: options.semester,
+    GRADE: options.grade,
+    CLASS_NM: options.className,
+  }, options);
+
+  return {
+    ok: true,
+    status: "ok",
+    dataset,
+    startDate: range.start.isoDate,
+    endDate: range.end.isoDate,
+    timetable: normalizeTimetableRows(payload, {
+      dataset,
+      fetchedAt: options.fetchedAt,
+      now: options.now,
+    }),
+  };
+}
+
 module.exports = {
   requestNeisJson,
   resolveSchool,
   searchSchools,
   getMeals,
   getSchedule,
+  getTimetable,
   ...require("./parse"),
 };

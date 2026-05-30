@@ -1,0 +1,32 @@
+# k-parent-source-seoul
+
+서울 열린데이터광장 공공서비스예약(OpenAPI) source adapter for k-parent-skill.
+
+## Usage
+
+```js
+const {
+  fetchReservations,
+  parseReservations,
+  RESERVATION_SERVICES,
+} = require("k-parent-source-seoul");
+```
+
+`fetchReservations({ service, start, end })` calls
+`http://openapi.seoul.go.kr:8088/{KEY}/json/{SERVICE}/{START}/{END}/`.
+
+Supported services (`RESERVATION_SERVICES`):
+
+- `ListPublicReservationCulture` — 문화/체험 강좌
+- `ListPublicReservationEducation` — 교육 프로그램
+- `ListPublicReservationSport` — 체육 강습
+
+## Environment
+
+- `KSKILL_SEOUL_KEY` — 서울 열린데이터광장 인증키 (https://data.seoul.go.kr).
+
+## Refresh fixtures
+
+```
+npm run refresh:fixtures
+```

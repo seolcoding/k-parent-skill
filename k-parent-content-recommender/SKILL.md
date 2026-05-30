@@ -1,6 +1,6 @@
 ---
 name: k-parent-content-recommender
-description: Use when Korean parents ask for child-friendly YouTube channels, videos, audio-first content for car rides, curriculum-linked media, conversation topics, educational listening, or parent-child discussion prompts.
+description: 대한민국 부모가 아이와 볼/들을 콘텐츠를 찾을 때 쓰는 스킬. YouTube Data API(packages/k-parent-source-youtube, safeSearch strict)로 교과 연계 영상·차 안 오디오형 콘텐츠·부모자녀 대화 주제를 추천한다. "차에서 들려줄 만한 거 추천해줘", "초3 과학 단원 연계 영상", "아이랑 대화할 주제 알려줘" 같은 요청에 사용.
 license: MIT
 metadata:
   category: parenting

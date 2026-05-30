@@ -1,6 +1,6 @@
 ---
 name: k-parent-data-collector
-description: Use when collecting or crawling real Korean parent data sources including school data, timetables, education offices, lifelong education, festivals, events, culture centers, trends, and public local pages.
+description: 대한민국 부모 생활정보를 여러 소스에서 수집·정규화하는 내부 파이프라인 스킬. 출처·수집시각·freshness를 기록하며 학교·축제·행사·문화·트렌드 데이터를 모은다(packages/k-parent-source-naver runCollector). "여러 소스에서 부모 데이터 모아줘", "행사 수집 파이프라인 만들어줘" 같은 수집 작업에 사용. 최종 사용자용 단건 조회는 각 도메인 스킬(k-parent-school-info, k-parent-play-finder 등)을 쓴다.
 license: MIT
 metadata:
   category: parenting

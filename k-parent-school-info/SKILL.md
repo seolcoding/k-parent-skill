@@ -1,6 +1,6 @@
 ---
 name: k-parent-school-info
-description: Use when Korean parents ask for school information, notices, academic calendars, after-school programs, school meals, commute details, or parent-facing school summaries.
+description: 대한민국 초·중·고 학부모가 학교 정보를 확인할 때 쓰는 스킬. NEIS 공개데이터로 학교 기본정보·학사일정·시간표·급식을 확정해 부모 실행 단위로 정리한다(packages/k-parent-source-neis, k-parent-brief). "이번 달 학교 일정 정리해줘", "○○초 공지 확인해줘", "방과후 신청 언제까지야" 같은 요청에 사용. 급식만 따로면 k-parent-meal-planner, 종이 안내문 사진 처리는 k-parent-school-doc-capture.
 license: MIT
 metadata:
   category: parenting
@@ -45,7 +45,7 @@ const resolved = await resolveSchool({
 // resolved.ok === true 일 때 resolved.school.schoolCode / school.atptOfcdcScCode 사용
 ```
 
-`resolveSchool`이 `ambiguous`를 반환하면 임의로 하나를 고르지 않고 `candidates`(이름, 주소, 학교급)를 사용자에게 보여주고 재확인한다.
+`resolveSchool`이 `ambiguous`를 반환하면 임의로 하나를 고르지 않고 `candidates`(이름, 주소, 학교급)를 사용자에게 보여주고 재확인한다. 시도교육청 코드 참조표는 `references/neis-office-codes.md`를 본다.
 
 ### 3. Fetch official data → compose brief
 

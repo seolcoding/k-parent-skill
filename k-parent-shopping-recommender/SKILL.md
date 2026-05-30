@@ -1,6 +1,6 @@
 ---
 name: k-parent-shopping-recommender
-description: Use when Korean parents ask for product recommendations, school supplies, academy books, toys, childcare items, nutrition-related purchases, price comparison, stock checks, or Coupang affiliate purchase links.
+description: 대한민국 부모가 준비물·교재·장난감·육아용품을 살 때 쓰는 스킬. 네이버 쇼핑(packages/k-parent-source-naver)으로 가격·배송·리뷰·재고를 비교하고 쿠팡 파트너스(k-parent-source-coupang)는 제휴 고지와 함께 보조로 제공한다. "초등 입학 준비물 추천해줘", "○○ 교재 어디가 싸", "유아 장난감 가격 비교해줘" 같은 요청에 사용. 결제·구매는 사용자 승인 전 실행하지 않는다.
 license: MIT
 metadata:
   category: parenting

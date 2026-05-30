@@ -1,6 +1,6 @@
 ---
 name: k-parent-culture-center-events
-description: 문화센터/도서관/지자체 문화 강좌와 체험 프로그램을 지역·연령·기간으로 찾아 안내합니다. 예약·결제는 사용자 승인 전에는 실행하지 않습니다.
+description: 대한민국 부모가 문화센터·도서관·지자체 강좌와 체험 프로그램을 찾을 때 쓰는 스킬. 서울 공공서비스예약·도서관정보나루·문화포털(packages/k-parent-source-seoul/library/culture)로 지역·연령·접수기간 기준으로 안내한다. "백화점 문화센터 강좌", "도서관 프로그램 신청", "주말 체험 강좌 찾아줘" 같은 요청에 사용. 접수기간이 있는 강좌·체험·예약형 전용이며, 야외 놀거리는 k-parent-play-finder, 축제는 k-parent-festival-finder. 예약·결제는 사용자 승인 전에는 실행하지 않습니다.
 ---
 
 # 문화센터 이벤트 도우미

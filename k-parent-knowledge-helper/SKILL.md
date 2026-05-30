@@ -1,6 +1,6 @@
 ---
 name: k-parent-knowledge-helper
-description: Use when Korean parents ask general parenting knowledge questions, school or child-life explanations, source-aware answers, decision support, or everyday guidance that is not tied to one specific API.
+description: 대한민국 부모의 일반 지식·생활 판단 질문에 출처 기반으로 답하는 스킬. 더 구체적인 k-parent 스킬이 다루지 않는 영역을 보조한다. "예방접종 일정 일반적으로 어떻게 돼", "초등 입학 전에 뭘 준비해야 해", 특정 스킬로 분류되지 않는 부모 생활 질문에 사용. 학교·유치원·신청·식단 등 구체 조회는 해당 전용 스킬로 라우팅한다.
 license: MIT
 metadata:
   category: parenting

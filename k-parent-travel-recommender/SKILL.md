@@ -1,6 +1,6 @@
 ---
 name: k-parent-travel-recommender
-description: 대한민국 부모를 위한 아이 동반 여행지 추천 스킬. 한국관광공사 TourAPI 지역기반(areaBasedList)·위치기반(locationBasedList)으로 아이와 가기 좋은 관광지·문화시설·레포츠를 모아 가족 여행 코스를 제안한다. "아이랑 1박2일 여행", "가족 여행지 추천", "근처 아이랑 갈 코스" 같은 요청에 사용.
+description: 대한민국 부모를 위한 아이 동반 여행지 추천 스킬. 한국관광공사 TourAPI 지역기반(areaBasedList)·위치기반(locationBasedList)으로 아이와 가기 좋은 관광지·문화시설·레포츠를 모아 가족 여행 코스를 제안한다. "아이랑 1박2일 여행", "가족 여행지 추천", "근처 아이랑 갈 코스" 같은 요청에 사용. 1박 이상·타지역 여행 코스 전용이며, 당일 근처 놀거리는 k-parent-play-finder, 날짜 있는 축제는 k-parent-festival-finder.
 ---
 
 # k-parent-travel-recommender

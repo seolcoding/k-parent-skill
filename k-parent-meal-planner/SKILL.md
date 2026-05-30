@@ -1,6 +1,6 @@
 ---
 name: k-parent-meal-planner
-description: Use when Korean parents ask for child meal planning, school lunch lookup, kindergarten meal checks, allergy-aware menu summaries, or weekly meal ideas.
+description: 대한민국 부모가 아이 식단을 챙길 때 쓰는 스킬. NEIS 학교 급식·유치원 식단·가정 식단 후보를 아이 알레르기(1~19번) 기준으로 정리한다(packages/k-parent-source-neis, k-parent-brief). "이번 주 급식 뭐야", "알레르기 빼고 식단 짜줘", "유치원 식단표 확인해줘" 같은 요청에 사용. 학교 공지·학사일정 전반은 k-parent-school-info.
 license: MIT
 metadata:
   category: parenting
@@ -72,7 +72,7 @@ const brief = composeTodayBrief({
 // brief.warnings 의 type === "allergy" 항목으로 아이 알레르기 매칭을 부모에게 알린다.
 ```
 
-각 급식 항목은 `menuItems`, `allergens`(라벨), `allergyNumbers`(1~19), `origin`, `calories`, `nutrition`, `source`를 포함한다.
+각 급식 항목은 `menuItems`, `allergens`(라벨), `allergyNumbers`(1~19), `origin`, `calories`, `nutrition`, `source`를 포함한다. 알레르기 번호 전체 코드표는 `references/allergen-codes.md`를 본다.
 
 ### 3b. Data-contract envelope
 

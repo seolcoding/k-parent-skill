@@ -1,6 +1,6 @@
 ---
 name: k-parent-mobile-agent
-description: Use when designing or operating a server-deployed mobile parent agent that normal users can access from a phone for child schedules, school data, recommendations, reminders, and agentic parent workflows.
+description: 모바일에서 쓰는 서버 배포형 부모 에이전트의 제품·라우팅 설계 스킬. 사용자 명령을 적절한 k-parent 스킬로 라우팅하고 k-parent-brief로 합성한다. "모바일 부모 에이전트 설계해줘", "서버 배포형 부모 비서 구조 잡아줘" 같은 제품/아키텍처 작업에 사용. 단일 도메인 조회는 개별 스킬을 직접 쓴다.
 license: MIT
 metadata:
   category: parenting
@@ -31,7 +31,20 @@ metadata:
 - 가족 캘린더 연결 여부
 - 알림 선호
 
-### 2. Show the mobile home
+### 2. Route commands
+
+에이전틱 명령을 적절한 스킬로 라우팅한다. 전체 매핑은 `docs/skill-routing.md`를 따른다.
+
+| 명령 | 호출 스킬 |
+| --- | --- |
+| "이번 주 챙길 것" | `k-parent-brief` + `k-parent-school-info` + `k-parent-application-helper` |
+| "주말 갈 곳" | `k-parent-play-finder` / `k-parent-festival-finder` / `k-parent-travel-recommender` |
+| "학교 일정 정리" | `k-parent-school-info` + `k-parent-school-doc-capture` |
+| "학원 숙제 확인" | `k-parent-academy-connector` |
+| "준비물 사기" | `k-parent-shopping-recommender` |
+| "여행지 추천" | `k-parent-travel-recommender` |
+
+### 3. Show the mobile home
 
 첫 화면은 설명보다 실행 가능한 정보를 보여준다.
 

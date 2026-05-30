@@ -8,6 +8,10 @@
 - 처음학교로, 유치원알리미, 교육청, 기관 홈페이지를 우선 출처로 사용
 - 모집 상태와 마감일을 분리
 
+## 데이터 소스
+
+- `packages/k-parent-source-childinfo` — `fetchChildcareCenters({ sidoCode, sigunguCode })`, `fetchKindergartens({ sidoCode, sggCode })`. 환경변수 `KSKILL_DATAGOKR_KEY` (data.go.kr 통합키). 서비스 활용신청·엔드포인트 확정은 `OWNER-TASKS.md` 참고.
+
 ## 다음 구현 후보
 
 - 유치원알리미 공개 항목 매핑

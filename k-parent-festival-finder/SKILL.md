@@ -1,6 +1,6 @@
 ---
 name: k-parent-festival-finder
-description: 대한민국 부모를 위한 가족 축제·행사 찾기 스킬. 한국관광공사 TourAPI searchFestival로 날짜·지역 기준 축제를 검색하고, 가족(아이) 동반 적합도를 정리해 추천한다. "이번 주말 가족 축제", "다음 달 우리 동네 행사", "아이랑 갈 만한 봄 축제" 같은 요청에 사용.
+description: 대한민국 부모를 위한 가족 축제·행사 찾기 스킬. 한국관광공사 TourAPI searchFestival로 날짜·지역 기준 축제를 검색하고, 가족(아이) 동반 적합도를 정리해 추천한다. "이번 주말 가족 축제", "다음 달 우리 동네 행사", "아이랑 갈 만한 봄 축제" 같은 요청에 사용. 시작·종료일이 있는 명명된 축제·행사 전용이며, 상시 놀거리·실내 장소는 k-parent-play-finder, 여행 코스는 k-parent-travel-recommender.
 ---
 
 # k-parent-festival-finder

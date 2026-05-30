@@ -1,6 +1,6 @@
 ---
 name: k-parent-kindergarten-info
-description: Use when Korean parents ask about kindergarten information, preschool admissions, public/private kindergarten comparison, after-care, shuttle, meal, or fee details.
+description: 대한민국 부모가 유치원·어린이집을 비교할 때 쓰는 스킬. 어린이집정보공개·유치원현황(packages/k-parent-source-childinfo)으로 운영시간·비용·교직원·급식/위생/안전·CCTV/차량·방과후를 비교한다. "근처 유치원 비교해줘", "국공립 유치원 모집 언제야", "어린이집 방과후 되는 곳 찾아줘" 같은 요청에 사용. 초·중·고 학교는 k-parent-school-info.
 license: MIT
 metadata:
   category: parenting

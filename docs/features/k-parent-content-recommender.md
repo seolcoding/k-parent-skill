@@ -39,6 +39,10 @@
 }
 ```
 
+## 데이터 소스
+
+- `packages/k-parent-source-youtube` — `searchVideos({ q, safeSearch: "strict" })`로 YouTube Data API v3 검색. 환경변수 `KSKILL_YOUTUBE_KEY`. 키 발급은 `OWNER-TASKS.md` 참고.
+
 ## 다음 구현 후보
 
 - 학년/교과/단원 taxonomy

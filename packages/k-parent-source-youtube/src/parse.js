@@ -3,6 +3,7 @@
 const { normalizeSourceMetadata } = require("./core");
 
 const SOURCE_NAME = "youtube";
+const SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
 
 function pickThumbnail(thumbnails) {
   if (!thumbnails || typeof thumbnails !== "object") {
@@ -26,7 +27,7 @@ function pickThumbnail(thumbnails) {
   return null;
 }
 
-function normalizeSearchItem(item) {
+function normalizeSearchItem(item, options = {}) {
   if (!item || typeof item !== "object") {
     return null;
   }
@@ -36,7 +37,7 @@ function normalizeSearchItem(item) {
     return null;
   }
   const snippet = item.snippet || {};
-  const base = {
+  return {
     videoId,
     title: snippet.title || null,
     channelTitle: snippet.channelTitle || null,
@@ -44,18 +45,24 @@ function normalizeSearchItem(item) {
     description: snippet.description || null,
     thumbnail: pickThumbnail(snippet.thumbnails),
     url: `https://youtu.be/${videoId}`,
-  };
-  return Object.assign(base, {
-    ...normalizeSourceMetadata({
-      source: SOURCE_NAME,
-      source_id: videoId,
+    // Provenance metadata as a nested object, matching the k-parent source
+    // convention. normalizeSourceMetadata (from k-parent-core) requires a
+    // sourceName and returns { name, type, url, fetchedAt, freshness }.
+    source: normalizeSourceMetadata({
+      sourceName: `YouTube Data API v3 ${SOURCE_NAME}`,
+      sourceType: "official",
+      sourceUrl: SEARCH_URL,
+      fetchedAt: options.fetchedAt,
+      now: options.now,
     }),
-  });
+  };
 }
 
-function parseSearch(payload) {
+function parseSearch(payload, options = {}) {
   const items = payload && Array.isArray(payload.items) ? payload.items : [];
-  return items.map(normalizeSearchItem).filter(Boolean);
+  return items
+    .map((item) => normalizeSearchItem(item, options))
+    .filter(Boolean);
 }
 
-module.exports = { parseSearch, normalizeSearchItem, SOURCE_NAME };
+module.exports = { parseSearch, normalizeSearchItem, SOURCE_NAME, SEARCH_URL };

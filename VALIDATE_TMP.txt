@@ -1,2 +1,0 @@
-skill layout looks valid
-exit was 0

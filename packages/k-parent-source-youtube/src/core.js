@@ -18,9 +18,15 @@ try {
   core = {};
 }
 
+// Mirror k-parent-core/src/guardrails.js ERROR_STATUS values exactly so callers
+// see the same status codes whether or not k-parent-core resolves at runtime.
 const FALLBACK_ERROR_STATUS = Object.freeze({
-  MISSING_CONFIG: "MISSING_CONFIG",
-  UPSTREAM_ERROR: "UPSTREAM_ERROR",
+  MISSING_CONFIG: "missing_config",
+  AMBIGUOUS: "ambiguous",
+  NOT_FOUND: "not_found",
+  UPSTREAM_ERROR: "upstream_error",
+  RATE_LIMITED: "rate_limited",
+  PARSE_ERROR: "parse_error",
 });
 
 const ERROR_STATUS =
@@ -28,11 +34,42 @@ const ERROR_STATUS =
     ? core.ERROR_STATUS
     : FALLBACK_ERROR_STATUS;
 
-function fallbackNormalizeSourceMetadata(input = {}) {
+// Mirror k-parent-core/src/freshness.js normalizeSourceMetadata return shape
+// ({ name, type, url, fetchedAt, freshness }). sourceName is required.
+function fallbackNormalizeSourceMetadata({
+  sourceName = null,
+  sourceType = "unknown",
+  sourceUrl = null,
+  fetchedAt = new Date(),
+  now = new Date(),
+  maxAgeHours = null,
+} = {}) {
+  if (!sourceName) {
+    throw new Error("sourceName is required.");
+  }
+  const fetchedDate = fetchedAt ? new Date(fetchedAt) : null;
+  const nowDate = now ? new Date(now) : null;
+  const ageMs =
+    fetchedDate &&
+    nowDate &&
+    !Number.isNaN(fetchedDate.getTime()) &&
+    !Number.isNaN(nowDate.getTime())
+      ? nowDate - fetchedDate
+      : null;
+  const ageHours = ageMs == null ? null : ageMs / (1000 * 60 * 60);
+  let status = "unknown";
+  if (ageHours != null && maxAgeHours != null) {
+    status = ageHours <= maxAgeHours ? "fresh" : "stale";
+  }
   return {
-    source: input.source || null,
-    source_id: input.source_id != null ? String(input.source_id) : null,
-    fetched_at: input.fetched_at || new Date().toISOString(),
+    name: sourceName,
+    type: sourceType,
+    url: sourceUrl,
+    fetchedAt:
+      fetchedDate && !Number.isNaN(fetchedDate.getTime())
+        ? fetchedDate.toISOString()
+        : null,
+    freshness: { status, ageHours, maxAgeHours },
   };
 }
 

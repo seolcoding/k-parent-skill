@@ -3,6 +3,7 @@ node_modules/
 .omx/
 .env
 .env.*
+!.env.example
 *.dec
 *.plaintext
 .venv/

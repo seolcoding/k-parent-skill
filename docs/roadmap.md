@@ -4,15 +4,21 @@
 
 K-Parent Skills는 `학교`, `학원`, `놀이`, `생활`, `트렌드`, `쇼핑`, `영양` 디파트먼트로 확장한다.
 
-| 디파트먼트 | 현재 상태 | 다음 후보 |
-| --- | --- | --- |
-| 학교 | 학교 정보, 유치원, 학교문서 OCR | NEIS resolver, 급식 알레르기 파서, 유치원/어린이집 알리미 resolver, 안내문 저장소, 방과후 신청 |
-| 학원 | 학원 연동 컨셉 | 학원 앱/API 표면 조사, 문자/카카오 알림 파서 |
-| 놀이 | 놀거리, 축제, 문화센터, 여행지 추천 | TourAPI/공공예약/평생교육 수집, 날씨 기반 후보 정렬, 이동 중 콘텐츠 추천 |
-| 생활 | 각종 신청 | 정부24/복지로/돌봄 신청 가이던스, 자녀 스케줄, 가족 캘린더, 돌봄/복지/병원/예방접종 체크리스트 |
-| 트렌드 | planned | 실제 트렌드/지역 부모 커뮤니티/인기 행사/시즌 이슈 크롤링 |
-| 쇼핑 | 쇼핑 추천 컨셉 | 준비물/교재/장난감/육아용품 가격·재고 비교, 쿠팡 어필리에이트는 보조 수익모델 |
-| 영양 | 식단 | 급식+유치원 식단+알레르기+집밥 보완 |
+상태 범례: **adapter(fixture)** = 공식 API 어댑터 패키지 구현 완료, fixture로 오프라인 동작(키 넣으면 라이브) · **logic** = 외부 키 없는 순수 로직 패키지 · **concept** = 워크플로우 문서.
+
+| 디파트먼트 | 현재 상태 | 구현 패키지 | 다음 후보 |
+| --- | --- | --- | --- |
+| 학교 | adapter(fixture): NEIS 학교/급식/학사일정/시간표 + Today Brief; 안내문 추출 logic | `k-parent-source-neis`, `k-parent-brief`, `k-parent-doc-extract` | 유치원/어린이집 알리미 정밀화, 방과후 신청 흐름 |
+| 학원 | logic: 알림 텍스트 정규화(doc-extract) | `k-parent-doc-extract` | 학원 앱/API 표면 조사, 문자/카카오 알림 파서 |
+| 놀이 | adapter(fixture): TourAPI 축제/관광지/주변, 놀이시설·도시공원, 서울예약·도서관·문화 | `k-parent-source-tourapi`, `-playground`, `-seoul`, `-library`, `-culture` | 날씨 기반 후보 정렬, 평생교육 확대 |
+| 생활 | logic: 복지 카탈로그·딥링크, 캘린더 후보·ICS; adapter(fixture): 응급의료 야간/휴일 | `k-parent-source-welfare`, `k-parent-calendar`, `k-parent-source-emergency` | 정부24/복지로 가이던스 확대, 예방접종 체크리스트 |
+| 트렌드 | logic: 제너릭 수집 러너 + 네이버 신호 | `k-parent-source-naver` (collector) | 지역 부모 커뮤니티/시즌 이슈 수집 |
+| 쇼핑 | adapter(fixture): 네이버 가격비교 + 쿠팡 어필리에이트(고지) | `k-parent-source-naver`, `k-parent-source-coupang` | 재고·대체품·중고 비교 강화 |
+| 영양 | adapter(fixture): NEIS 급식·알레르기 | `k-parent-source-neis` | 유치원 식단+집밥 보완 |
+| 콘텐츠 | adapter(fixture): YouTube 교과 연계(safeSearch) | `k-parent-source-youtube` | 오디오형/대화 주제 큐레이션 확대 |
+| 유치원 | adapter(fixture): 어린이집/유치원 공시 비교 | `k-parent-source-childinfo` | 처음학교로 모집 흐름 |
+
+> 모든 소스 패키지는 fixture-first입니다. 크레덴셜 발급·라이브 전환은 [OWNER-TASKS.md](../OWNER-TASKS.md) 참고.
 
 ## Demo placeholders
 

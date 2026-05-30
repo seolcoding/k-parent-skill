@@ -6,6 +6,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const youtube = require("../src/index.js");
+const { ERROR_STATUS } = require("../src/core.js");
 
 function readFixture(name) {
   const file = path.join(__dirname, "fixtures", name);
@@ -41,6 +42,9 @@ test("searchVideos normalizes the search fixture (injected fetchImpl)", async ()
     "https://i.ytimg.com/vi/abc123XYZ_0/hqdefault.jpg"
   );
   assert.ok(typeof first.description === "string");
+  // provenance metadata is attached as a nested object
+  assert.ok(first.source && typeof first.source === "object");
+  assert.equal(first.source.url, youtube.SEARCH_URL);
 });
 
 test("searchVideos accepts a pre-fetched payload and bypasses HTTP", async () => {
@@ -65,7 +69,7 @@ test("searchVideos throws MISSING_CONFIG when api key absent", async () => {
     await assert.rejects(
       () => youtube.searchVideos({ q: "test", fetchImpl: makeFetch({}) }),
       (err) => {
-        assert.equal(err.status, "MISSING_CONFIG");
+        assert.equal(err.status, ERROR_STATUS.MISSING_CONFIG);
         return true;
       }
     );
@@ -80,7 +84,7 @@ test("searchVideos throws MISSING_CONFIG when q absent", async () => {
   await assert.rejects(
     () => youtube.searchVideos({ apiKey: "k", fetchImpl: makeFetch({}) }),
     (err) => {
-      assert.equal(err.status, "MISSING_CONFIG");
+      assert.equal(err.status, ERROR_STATUS.MISSING_CONFIG);
       return true;
     }
   );
@@ -95,7 +99,7 @@ test("searchVideos throws UPSTREAM_ERROR on non-ok response", async () => {
         fetchImpl: makeFetch({ error: "forbidden" }, { status: 403 }),
       }),
     (err) => {
-      assert.equal(err.status, "UPSTREAM_ERROR");
+      assert.equal(err.status, ERROR_STATUS.UPSTREAM_ERROR);
       assert.equal(err.statusCode, 403);
       return true;
     }
@@ -115,4 +119,5 @@ test("parseSearch skips items without a videoId", () => {
   assert.equal(results.length, 1);
   assert.equal(results[0].videoId, "keep1");
   assert.equal(results[0].url, "https://youtu.be/keep1");
+  assert.equal(results[0].thumbnail, null);
 });

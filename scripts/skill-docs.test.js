@@ -210,6 +210,114 @@ if (readJson("package.json").name === "k-parent-skill") {
     assert.match(architecture, /Do not submit applications/);
   });
 
+  runParentSkillTest("parent skill descriptions are Korean, give trigger examples, and cite backing packages", () => {
+    const parentSkills = [
+      "k-parent-meal-planner",
+      "k-parent-school-info",
+      "k-parent-kindergarten-info",
+      "k-parent-play-finder",
+      "k-parent-festival-finder",
+      "k-parent-culture-center-events",
+      "k-parent-application-helper",
+      "k-parent-academy-connector",
+      "k-parent-school-doc-capture",
+      "k-parent-shopping-recommender",
+      "k-parent-mobile-agent",
+      "k-parent-data-collector",
+      "k-parent-schedule-manager",
+      "k-parent-travel-recommender",
+      "k-parent-knowledge-helper",
+      "k-parent-content-recommender",
+    ];
+
+    // Backing source/logic package each skill must cite somewhere in its SKILL.md.
+    const packageRefs = {
+      "k-parent-meal-planner": "k-parent-source-neis",
+      "k-parent-school-info": "k-parent-source-neis",
+      "k-parent-kindergarten-info": "k-parent-source-childinfo",
+      "k-parent-play-finder": "k-parent-source-playground",
+      "k-parent-festival-finder": "k-parent-source-tourapi",
+      "k-parent-culture-center-events": "k-parent-source-seoul",
+      "k-parent-shopping-recommender": "k-parent-source-naver",
+      "k-parent-content-recommender": "k-parent-source-youtube",
+      "k-parent-travel-recommender": "k-parent-source-tourapi",
+      "k-parent-schedule-manager": "k-parent-calendar",
+      "k-parent-school-doc-capture": "k-parent-doc-extract",
+      "k-parent-application-helper": "k-parent-source-welfare",
+    };
+
+    // Overlapping play-department skills must name a sibling in the description to disambiguate.
+    const overlapSiblings = {
+      "k-parent-play-finder": /k-parent-(festival-finder|travel-recommender|culture-center-events)/,
+      "k-parent-festival-finder": /k-parent-(play-finder|travel-recommender)/,
+      "k-parent-travel-recommender": /k-parent-(play-finder|festival-finder)/,
+      "k-parent-culture-center-events": /k-parent-(play-finder|festival-finder)/,
+    };
+
+    for (const skillName of parentSkills) {
+      const skill = read(path.join(skillName, "SKILL.md"));
+      const descMatch = skill.match(/^description: (.+)$/m);
+      assert.ok(descMatch, `${skillName} SKILL.md must have a description`);
+      const description = descMatch[1];
+
+      assert.match(description, /[가-힣]/, `${skillName} description must be Korean`);
+      assert.doesNotMatch(
+        description,
+        /^Use when\b/,
+        `${skillName} description must not be the English "Use when ..." form`,
+      );
+      assert.match(
+        description,
+        /"[^"]+"/,
+        `${skillName} description must include at least one quoted trigger utterance`,
+      );
+
+      if (packageRefs[skillName]) {
+        assert.match(
+          skill,
+          new RegExp(escapeRegex(packageRefs[skillName])),
+          `${skillName} SKILL.md must cite its backing package ${packageRefs[skillName]}`,
+        );
+      }
+
+      if (overlapSiblings[skillName]) {
+        assert.match(
+          description,
+          overlapSiblings[skillName],
+          `${skillName} description must name a sibling skill to disambiguate overlap`,
+        );
+      }
+    }
+  });
+
+  runParentSkillTest("skill routing index maps every parent skill", () => {
+    const parentSkills = [
+      "k-parent-meal-planner",
+      "k-parent-school-info",
+      "k-parent-kindergarten-info",
+      "k-parent-play-finder",
+      "k-parent-festival-finder",
+      "k-parent-culture-center-events",
+      "k-parent-application-helper",
+      "k-parent-academy-connector",
+      "k-parent-school-doc-capture",
+      "k-parent-shopping-recommender",
+      "k-parent-mobile-agent",
+      "k-parent-data-collector",
+      "k-parent-schedule-manager",
+      "k-parent-travel-recommender",
+      "k-parent-knowledge-helper",
+      "k-parent-content-recommender",
+    ];
+    const routing = read(path.join("docs", "skill-routing.md"));
+    const readme = read("README.md");
+
+    for (const skillName of parentSkills) {
+      assert.match(routing, new RegExp(escapeRegex(skillName)), `routing index must list ${skillName}`);
+    }
+    assert.match(readme, /\[스킬 라우팅 인덱스\]\(docs\/skill-routing\.md\)/);
+  });
+
   test = test.skip;
 }
 
